@@ -1,19 +1,16 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import BentoDailyCaseStudy from './BentoDailyCaseStudy'
+import CaseStudiesSection from './CaseStudiesSection'
+import ProjectsSection from './ProjectsSection'
+import RouteTransition from './RouteTransition'
+import SiteChrome from './SiteChrome'
+import { scrollToSection } from './pageTransition'
 import profilePhoto from './assets/profile.jpg'
 import avatarImg from './assets/avatar.jpg'
-import projectOne from './assets/project-1.jpg'
-import projectTwo from './assets/project-2.jpg'
 import bentoOne from './assets/bento-1.jpg'
 import bentoTwo from './assets/bento-2.jpg'
-import bentoThree from './assets/bento-3.jpg'
 import './App.css'
-
-const NAV_LINKS = [
-  { label: 'Home', href: '#home' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Services', href: '#services' },
-  { label: 'Pricing', href: '#pricing' },
-]
 
 const RevealContext = createContext(true)
 
@@ -124,33 +121,6 @@ function RevealItem({ children, delay = 0, className = '' }) {
     >
       {children}
     </div>
-  )
-}
-
-function Topbar() {
-  return (
-    <header className="topbar-wrapper">
-      <div className="nav-container">
-        <a className="logo-group" href="#home" aria-label="Folioxa home">
-          <span className="logo-icon" aria-hidden="true">
-            F
-          </span>
-          <span className="logo-text">Folioxa</span>
-        </a>
-        <div className="right-group">
-          <nav className="nav-links" aria-label="Main navigation">
-            {NAV_LINKS.map(({ label, href }) => (
-              <a key={href} href={href}>
-                {label}
-              </a>
-            ))}
-          </nav>
-          <a className="contact-btn" href="#contact">
-            Contact
-          </a>
-        </div>
-      </div>
-    </header>
   )
 }
 
@@ -298,68 +268,69 @@ across the US, EU, and worldwide.
 
 const CLIENT_LOGOS = [
   {
-    id: 'bolt',
-    label: 'Logoipsum',
+    id: 'healthcare',
+    label: 'Healthcare & HIPAA',
     icon: (
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <circle cx="14" cy="14" r="13" stroke="currentColor" strokeWidth="1.5" />
-        <path
-          d="M16 8L11 15H14L12 20L17 13H14L16 8Z"
-          fill="currentColor"
-        />
+        <rect x="5" y="6" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M14 10v8M10 14h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M5 12h3M20 12h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
   },
   {
-    id: 'wave',
-    label: 'logoipsum',
+    id: 'ai-products',
+    label: 'AI Products',
     icon: (
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <path
-          d="M4 18C8 12 12 12 14 18C16 24 20 24 24 18"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-        <path
-          d="M4 22C8 16 12 16 14 22C16 28 20 28 24 22"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          opacity="0.5"
-        />
+        <rect x="7" y="9" width="14" height="12" rx="3" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="11" cy="14" r="1.5" fill="currentColor" />
+        <circle cx="17" cy="14" r="1.5" fill="currentColor" />
+        <path d="M12 17.5h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M10 6v3M18 6v3M7 9h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
   },
   {
-    id: 'loops',
-    label: 'Logoipsum',
+    id: 'hrms',
+    label: 'HRMS & HCM',
     icon: (
-      <svg width="32" height="28" viewBox="0 0 32 28" fill="none" aria-hidden="true">
-        <ellipse cx="11" cy="14" rx="8" ry="10" stroke="currentColor" strokeWidth="1.5" />
-        <ellipse cx="21" cy="14" rx="8" ry="10" stroke="currentColor" strokeWidth="1.5" />
-        <ellipse cx="16" cy="14" rx="8" ry="10" stroke="currentColor" strokeWidth="1.5" />
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="6" y="8" width="16" height="16" rx="1" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M6 13h16M11 8v16M17 8v16" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M10 5h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
   },
   {
-    id: 'circles',
-    label: 'Logoipsum',
+    id: 'fintech',
+    label: 'Fintech',
     icon: (
-      <svg width="32" height="28" viewBox="0 0 32 28" fill="none" aria-hidden="true">
-        <circle cx="13" cy="14" r="9" stroke="currentColor" strokeWidth="1.5" />
-        <circle cx="19" cy="14" r="9" stroke="currentColor" strokeWidth="1.5" />
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="4" y="8" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M4 13h20" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M8 17h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
   },
   {
-    id: 'shapes',
-    label: 'logoipsum',
+    id: 'ecommerce',
+    label: 'E-Commerce',
     icon: (
-      <svg width="32" height="28" viewBox="0 0 32 28" fill="none" aria-hidden="true">
-        <rect x="3" y="8" width="10" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" />
-        <circle cx="22" cy="12" r="5" stroke="currentColor" strokeWidth="1.5" />
-        <circle cx="27" cy="18" r="4" stroke="currentColor" strokeWidth="1.5" />
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <path d="M6 7h3l2 12h8l2-9H9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="12" cy="22" r="1.5" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="19" cy="22" r="1.5" stroke="currentColor" strokeWidth="1.5" />
+      </svg>
+    ),
+  },
+  {
+    id: 'inventory',
+    label: 'Inventory & Ops',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <path d="M14 4l9 5v10l-9 5-9-5V9l9-5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M14 14v10M5 9l9 5 9-5" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
       </svg>
     ),
   },
@@ -390,30 +361,6 @@ function TrustedSection() {
     </section>
   )
 }
-
-const PROJECTS = [
-  {
-    id: 'creative-studio',
-    title: 'Creative Studio',
-    year: '/2026',
-    image: projectOne,
-    href: '#projects',
-  },
-  {
-    id: 'ecommerce-product',
-    title: 'E-commerce Product',
-    year: '/2026',
-    image: projectTwo,
-    href: '#projects',
-  },
-  {
-    id: 'brand-identity',
-    title: 'Brand Identity',
-    year: '/2026',
-    image: bentoThree,
-    href: '#projects',
-  },
-]
 
 const SERVICE_TOOLS = [
   {
@@ -989,38 +936,6 @@ function CtaSection() {
   )
 }
 
-function ProjectsSection() {
-  return (
-    <section className="projects-section" id="projects">
-      <div className="projects-inner">
-        <span className="projects-badge">My Projects</span>
-        <h2 className="projects-heading">My Latest Projects</h2>
-        <div className="projects-grid">
-          {PROJECTS.map((project) => (
-            <article className="project-card" key={project.id}>
-              <div className="project-card-header">
-                <h3 className="project-title">{project.title}</h3>
-                <span className="project-year">{project.year}</span>
-              </div>
-              <a className="project-image-wrap" href={project.href}>
-                <img
-                  className="project-image"
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                />
-              </a>
-            </article>
-          ))}
-        </div>
-        <a className="projects-view-all" href="#projects">
-          View all Projects
-        </a>
-      </div>
-    </section>
-  )
-}
-
 const BENTO_STEPS = ['Create Design', 'Build Framer', 'Launch']
 
 const BENTO_STATS = [
@@ -1145,56 +1060,29 @@ function BentoSection() {
             </div>
           </article>
 
-          <article className="bento-card bento-feature bento-feature--launch">
-            <div className="bento-feature-visual bento-feature-visual--dark">
-              <span className="bento-feature-mark" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
-                  <path d="M4 28L16 4L28 28H20L16 18L12 28H4Z" fill="#ffffff" />
-                </svg>
-              </span>
-              <img src={bentoThree} alt="" loading="lazy" />
-            </div>
-            <div className="bento-feature-copy bento-feature-copy--light">
-              <h3 className="bento-feature-title">
-                Build and launch websites with confidence
-              </h3>
-              <p className="bento-feature-text">
-                A streamlined process to design, customize, and publish modern
-                websites faster.
-              </p>
-            </div>
-          </article>
+          <BentoDailyCaseStudy />
         </div>
       </div>
     </section>
   )
 }
 
-function Footer() {
-  return (
-    <footer className="site-footer">
-      <div className="footer-inner">
-        <p className="footer-credit">Create By @ru Design</p>
-        <a
-          className="footer-framer"
-          href="https://www.framer.com/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M2 14L8 2L14 14H10L8 10L6 14H2Z" fill="currentColor" />
-          </svg>
-          Built in Framer
-        </a>
-      </div>
-    </footer>
-  )
-}
+function HomePage() {
+  const location = useLocation()
 
-function App() {
+  useEffect(() => {
+    if (!location.state?.scrollTo) return undefined
+
+    const timer = window.setTimeout(() => {
+      scrollToSection(location.state.scrollTo)
+    }, 480)
+
+    return () => window.clearTimeout(timer)
+  }, [location])
+
   return (
     <>
-      <Topbar />
+      <SiteChrome />
       <ScrollReveal>
         <HeroSection />
       </ScrollReveal>
@@ -1202,20 +1090,27 @@ function App() {
         <TrustedSection />
       </ScrollReveal>
       <ScrollReveal>
-        <ProjectsSection />
-      </ScrollReveal>
-      <ScrollReveal>
         <BentoSection />
       </ScrollReveal>
+      <ScrollReveal>
+        <ProjectsSection />
+      </ScrollReveal>
       <ServicesSection />
+      <ScrollReveal>
+        <CaseStudiesSection />
+      </ScrollReveal>
       <HowItWorksSection />
       <FaqSection />
       <CtaSection />
       <ScrollReveal>
-        <Footer />
+        <SiteChrome.Footer />
       </ScrollReveal>
     </>
   )
+}
+
+function App() {
+  return <RouteTransition homePage={<HomePage />} />
 }
 
 export default App
