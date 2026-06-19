@@ -131,3 +131,7 @@ export function getProjectById(id) {
 export function projectPath(id) {
   return `/projects/${id}`
 }
+
+export function projectsListPath() {
+  return '/projects'
+}

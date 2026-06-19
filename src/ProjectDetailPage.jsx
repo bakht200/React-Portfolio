@@ -2,8 +2,8 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import ProjectsSection from './ProjectsSection'
 import SiteChrome from './SiteChrome'
 import { getCategoryLabel } from './categories'
-import { getProjectById } from './projects'
-import { NAV_BACK_TO_PROJECTS } from './pageTransition'
+import { getProjectById, projectsListPath } from './projects'
+import { NAV_BACK_TO_PROJECTS_LIST } from './pageTransition'
 import './App.css'
 
 export default function ProjectDetailPage() {
@@ -19,8 +19,8 @@ export default function ProjectDetailPage() {
       <SiteChrome />
       <main className="project-detail">
         <div className="project-detail-inner">
-          <Link className="project-detail-back" to="/" state={NAV_BACK_TO_PROJECTS}>
-            <span aria-hidden="true">←</span> All Projects
+          <Link className="project-detail-back" to={projectsListPath()} state={NAV_BACK_TO_PROJECTS_LIST} aria-label="Back to all projects">
+            <span aria-hidden="true">←</span>
           </Link>
 
           <header className="project-detail-header">

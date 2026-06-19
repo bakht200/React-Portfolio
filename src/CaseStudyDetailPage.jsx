@@ -2,8 +2,8 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import CaseStudiesSection from './CaseStudiesSection'
 import SiteChrome from './SiteChrome'
 import CaseStudyPdfViewer from './CaseStudyPdfViewer'
-import { caseStudyPdfUrl, getCaseStudyById } from './caseStudies'
-import { NAV_BACK_TO_CASE_STUDIES } from './pageTransition'
+import { caseStudiesListPath, caseStudyPdfUrl, getCaseStudyById } from './caseStudies'
+import { NAV_BACK_TO_CASE_STUDIES_LIST } from './pageTransition'
 import './App.css'
 
 export default function CaseStudyDetailPage() {
@@ -19,8 +19,8 @@ export default function CaseStudyDetailPage() {
       <SiteChrome />
       <main className="case-study-detail">
         <div className="case-study-detail-inner">
-          <Link className="case-study-back" to="/" state={NAV_BACK_TO_CASE_STUDIES}>
-            <span aria-hidden="true">←</span> All Case Studies
+          <Link className="case-study-back" to={caseStudiesListPath()} state={NAV_BACK_TO_CASE_STUDIES_LIST} aria-label="Back to all case studies">
+            <span aria-hidden="true">←</span>
           </Link>
 
           <header className="case-study-detail-header">

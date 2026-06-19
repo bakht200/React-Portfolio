@@ -13,7 +13,6 @@ export const FILTER_CATEGORIES = [
 ]
 
 export const COLLAPSED_ITEM_COUNT = 3
-export const EXPANDED_ITEM_COUNT = 9
 
 export function getCategoryLabel(categoryId) {
   return (

@@ -1,13 +1,14 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import BentoDailyCaseStudy from './BentoDailyCaseStudy'
 import CaseStudiesSection from './CaseStudiesSection'
 import ProjectsSection from './ProjectsSection'
 import RouteTransition from './RouteTransition'
-import SiteChrome from './SiteChrome'
+import SiteChrome, { NavAnchor } from './SiteChrome'
+import { aboutPath } from './about'
+import { NAV_FORWARD } from './pageTransition'
 import { scrollToSection } from './pageTransition'
-import profilePhoto from './assets/profile.jpg'
-import avatarImg from './assets/avatar.jpg'
+import profilePhoto from './assets/recommend-optimized.png'
 import bentoOne from './assets/bento-1.jpg'
 import bentoTwo from './assets/bento-2.jpg'
 import './App.css'
@@ -142,10 +143,11 @@ function HeroSection() {
                 <h2 className="profile-name">Haider Ghauri</h2>
                 <p className="profile-role">Senior Product Designer</p>
               </div>
-              <a
+              <Link
                 className="profile-message-btn"
-                href="#contact"
-                aria-label="Send message"
+                to={aboutPath()}
+                state={NAV_FORWARD}
+                aria-label="About me"
               >
                 <svg
                   width="18"
@@ -169,7 +171,7 @@ function HeroSection() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
         </article>
@@ -238,7 +240,7 @@ across the US, EU, and worldwide.
               </span>
             </a>
             <a className="intro-btn intro-btn-outline" href="#projects">
-              <span>View My Work</span>
+              <span>Explore My Work</span>
               <span className="intro-btn-icon intro-btn-icon-outline" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path
@@ -521,54 +523,57 @@ function ServicesSection() {
   return (
     <section className="services-section" id="services">
       <div className="services-inner">
-        <div className="services-left">
-          <h2 className="services-heading">
-            Services that supercharge your business.
-          </h2>
-          <p className="services-description">
-            Helping businesses standout with brand identity packaging that
-            captivates and converts effectively.
-          </p>
-          <a className="book-call-btn services-cta" href="#contact">
-            <span>Book a Free Call</span>
-            <span className="book-call-icon" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M5 12H19M19 12L12 5M19 12L12 19"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </a>
-          <div className="services-tools-marquee" aria-label="Tools and technologies">
-            <div className="services-tools-track">
-              {serviceTools.map((tool, index) => (
-                <div
-                  className="services-tool"
-                  key={`${tool.id}-${index}`}
-                  aria-hidden={index >= SERVICE_TOOLS.length}
-                >
-                  {tool.icon}
-                  <span>{tool.label}</span>
+        <div className="services-top">
+          <div className="services-left">
+            <h2 className="services-heading">
+              Services that supercharge your business.
+            </h2>
+            <p className="services-description">
+              Helping businesses standout with brand identity packaging that
+              captivates and converts effectively.
+            </p>
+            <a className="book-call-btn services-cta" href="#contact">
+              <span>Book a Free Call</span>
+              <span className="book-call-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M5 12H19M19 12L12 5M19 12L12 19"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+
+          <div className="services-cards" aria-label="Service offerings">
+            {SERVICES.map((service) => (
+              <article className="service-card" key={service.id}>
+                <div className="service-card-icon" aria-hidden="true">
+                  <ServiceIcon type={service.icon} />
                 </div>
-              ))}
-            </div>
+                <h3 className="service-card-title">{service.title}</h3>
+                <p className="service-card-description">{service.description}</p>
+              </article>
+            ))}
           </div>
         </div>
 
-        <div className="services-cards" aria-label="Service offerings">
-          {SERVICES.map((service) => (
-            <article className="service-card" key={service.id}>
-              <div className="service-card-icon" aria-hidden="true">
-                <ServiceIcon type={service.icon} />
+        <div className="services-tools-marquee" aria-label="Tools and technologies">
+          <div className="services-tools-track">
+            {serviceTools.map((tool, index) => (
+              <div
+                className="services-tool"
+                key={`${tool.id}-${index}`}
+                aria-hidden={index >= SERVICE_TOOLS.length}
+              >
+                {tool.icon}
+                <span>{tool.label}</span>
               </div>
-              <h3 className="service-card-title">{service.title}</h3>
-              <p className="service-card-description">{service.description}</p>
-            </article>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -993,7 +998,7 @@ function BentoSection() {
           <article className="bento-card bento-stats">
             <div className="bento-framer-logo" aria-hidden="true">
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <path d="M4 28L16 4L28 28H20L16 18L12 28H4Z" fill="#f97316" />
+                <path d="M4 28L16 4L28 28H20L16 18L12 28H4Z" fill="currentColor" />
               </svg>
             </div>
             <p className="bento-stats-count">20+ Projects Complete</p>
@@ -1083,28 +1088,38 @@ function HomePage() {
   return (
     <>
       <SiteChrome />
-      <ScrollReveal>
-        <HeroSection />
-      </ScrollReveal>
-      <ScrollReveal>
-        <TrustedSection />
-      </ScrollReveal>
-      <ScrollReveal>
-        <BentoSection />
-      </ScrollReveal>
-      <ScrollReveal>
-        <ProjectsSection />
-      </ScrollReveal>
-      <ServicesSection />
-      <ScrollReveal>
-        <CaseStudiesSection />
-      </ScrollReveal>
-      <HowItWorksSection />
-      <FaqSection />
-      <CtaSection />
-      <ScrollReveal>
-        <SiteChrome.Footer />
-      </ScrollReveal>
+      <main className="landing-main">
+        <ScrollReveal>
+          <HeroSection />
+        </ScrollReveal>
+        <ScrollReveal>
+          <TrustedSection />
+        </ScrollReveal>
+        <ScrollReveal>
+          <BentoSection />
+        </ScrollReveal>
+        <ScrollReveal>
+          <ProjectsSection />
+        </ScrollReveal>
+        <ScrollReveal>
+          <ServicesSection />
+        </ScrollReveal>
+        <ScrollReveal>
+          <CaseStudiesSection />
+        </ScrollReveal>
+        <ScrollReveal>
+          <HowItWorksSection />
+        </ScrollReveal>
+        <ScrollReveal>
+          <FaqSection />
+        </ScrollReveal>
+        <ScrollReveal>
+          <CtaSection />
+        </ScrollReveal>
+        <ScrollReveal>
+          <SiteChrome.Footer />
+        </ScrollReveal>
+      </main>
     </>
   )
 }

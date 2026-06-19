@@ -1,47 +1,25 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   COLLAPSED_ITEM_COUNT,
-  EXPANDED_ITEM_COUNT,
-  FILTER_CATEGORIES,
   getCategoryLabel,
 } from './categories'
 import { NAV_FORWARD } from './pageTransition'
-import { PROJECTS, projectPath } from './projects'
+import { PROJECTS, projectPath, projectsListPath } from './projects'
 
 export default function ProjectsSection({
   excludeId = null,
   heading = 'My Latest Projects',
   showBadge = true,
-  collapsible = true,
-  withFilter = true,
+  showViewAll = true,
   variant = 'default',
   id = 'projects',
 }) {
-  const [expanded, setExpanded] = useState(false)
-  const [category, setCategory] = useState('all')
-
   const pool = excludeId
     ? PROJECTS.filter((project) => project.id !== excludeId)
     : PROJECTS
 
-  const filtered = pool.filter(
-    (project) => category === 'all' || project.categoryId === category,
-  )
-
-  const limit = expanded ? EXPANDED_ITEM_COUNT : COLLAPSED_ITEM_COUNT
-  const visibleProjects = filtered.slice(0, limit)
-  const canExpand = pool.length > COLLAPSED_ITEM_COUNT
-
-  const toggleExpanded = () => {
-    if (expanded) {
-      setExpanded(false)
-      setCategory('all')
-      return
-    }
-
-    setExpanded(true)
-  }
+  const visibleProjects = pool.slice(0, COLLAPSED_ITEM_COUNT)
+  const canViewAll = showViewAll && pool.length > COLLAPSED_ITEM_COUNT
 
   const gridClassName =
     variant === 'more' ? 'more-projects-grid' : 'projects-grid'
@@ -61,28 +39,7 @@ export default function ProjectsSection({
           {heading}
         </h2>
 
-        <div
-          className={`projects-layout${expanded && withFilter ? ' projects-layout--expanded' : ''}`}
-        >
-          {expanded && withFilter && (
-            <aside className="projects-filter" aria-label="Filter projects by category">
-              <p className="projects-filter-label">Category</p>
-              <ul className="projects-filter-list">
-                {FILTER_CATEGORIES.map((item) => (
-                  <li key={item.id}>
-                    <button
-                      type="button"
-                      className={`projects-filter-btn${category === item.id ? ' projects-filter-btn--active' : ''}`}
-                      onClick={() => setCategory(item.id)}
-                    >
-                      {item.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </aside>
-          )}
-
+        <div className="projects-layout">
           <div className={gridClassName}>
             {visibleProjects.map((project) =>
               variant === 'more' ? (
@@ -134,14 +91,10 @@ export default function ProjectsSection({
           </div>
         </div>
 
-        {collapsible && canExpand && (
-          <button
-            type="button"
-            className="projects-view-all"
-            onClick={toggleExpanded}
-          >
-            {expanded ? 'View Less' : 'View all Projects'}
-          </button>
+        {canViewAll && (
+          <Link className="projects-view-all" to={projectsListPath()} state={NAV_FORWARD}>
+            View all Projects
+          </Link>
         )}
       </div>
     </section>

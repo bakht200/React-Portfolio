@@ -1,7 +1,11 @@
 import { useLayoutEffect, useRef } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import AboutPage from './AboutPage'
+import CaseStudiesListPage from './CaseStudiesListPage'
 import CaseStudyDetailPage from './CaseStudyDetailPage'
 import ProjectDetailPage from './ProjectDetailPage'
+import ProjectsListPage from './ProjectsListPage'
+import ScrollFab from './ScrollFab'
 import { getTransitionDirection } from './pageTransition'
 
 export default function RouteTransition({ homePage }) {
@@ -18,8 +22,9 @@ export default function RouteTransition({ homePage }) {
 
   useLayoutEffect(() => {
     if (
-      location.pathname.startsWith('/case-studies/') ||
-      location.pathname.startsWith('/projects/')
+      location.pathname.startsWith('/case-studies') ||
+      location.pathname.startsWith('/projects') ||
+      location.pathname === '/about'
     ) {
       window.scrollTo(0, 0)
     }
@@ -32,9 +37,13 @@ export default function RouteTransition({ homePage }) {
     >
       <Routes location={location}>
         <Route path="/" element={homePage} />
-        <Route path="/case-studies/:id" element={<CaseStudyDetailPage />} />
+        <Route path="/projects" element={<ProjectsListPage />} />
         <Route path="/projects/:id" element={<ProjectDetailPage />} />
+        <Route path="/case-studies" element={<CaseStudiesListPage />} />
+        <Route path="/case-studies/:id" element={<CaseStudyDetailPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
+      <ScrollFab />
     </div>
   )
 }

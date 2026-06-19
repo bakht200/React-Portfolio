@@ -1,13 +1,25 @@
 export const NAV_FORWARD = { direction: 'forward' }
 
+export const NAV_BACK_HOME = {
+  direction: 'back',
+}
+
 export const NAV_BACK_TO_CASE_STUDIES = {
   direction: 'back',
   scrollTo: 'case-studies',
 }
 
+export const NAV_BACK_TO_CASE_STUDIES_LIST = {
+  direction: 'back',
+}
+
 export const NAV_BACK_TO_PROJECTS = {
   direction: 'back',
   scrollTo: 'projects',
+}
+
+export const NAV_BACK_TO_PROJECTS_LIST = {
+  direction: 'back',
 }
 
 export function navToSection(sectionId) {
@@ -27,7 +39,13 @@ export function scrollToSection(sectionId) {
 }
 
 function isDetailPath(path) {
-  return path.startsWith('/case-studies/') || path.startsWith('/projects/')
+  return (
+    path.startsWith('/case-studies/') || path.startsWith('/projects/')
+  )
+}
+
+function isListPath(path) {
+  return path === '/projects' || path === '/case-studies' || path === '/about'
 }
 
 export function getTransitionDirection(location, previousPath) {
@@ -38,6 +56,18 @@ export function getTransitionDirection(location, previousPath) {
   const currentPath = location.pathname
 
   if (isDetailPath(previousPath) && currentPath === '/') {
+    return 'back'
+  }
+
+  if (isListPath(previousPath) && currentPath === '/') {
+    return 'back'
+  }
+
+  if (isListPath(previousPath) && isDetailPath(currentPath)) {
+    return 'forward'
+  }
+
+  if (isDetailPath(previousPath) && isListPath(currentPath)) {
     return 'back'
   }
 

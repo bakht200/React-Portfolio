@@ -1,10 +1,11 @@
-import { useLocation, useNavigate } from 'react-router-dom'
-import { navToSection, scrollToSection } from './pageTransition'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import logoIcon from './assets/HG icon.svg'
+import { aboutPath } from './about'
+import { navToSection, scrollToSection, NAV_FORWARD } from './pageTransition'
 
-const NAV_LINKS = [
+const SECTION_LINKS = [
   { label: 'Home', href: '#home' },
   { label: 'Projects', href: '#projects' },
-  { label: 'Services', href: '#services' },
   { label: 'Case Studies', href: '#case-studies' },
 ]
 
@@ -41,23 +42,46 @@ function NavAnchor({ href, children, className, ...rest }) {
   )
 }
 
+function AboutNavLink({ className, children }) {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleClick = (event) => {
+    event.preventDefault()
+
+    if (location.pathname === aboutPath()) return
+
+    navigate(aboutPath(), { state: NAV_FORWARD })
+  }
+
+  return (
+    <Link to={aboutPath()} className={className} onClick={handleClick}>
+      {children}
+    </Link>
+  )
+}
+
 function Topbar() {
   return (
     <header className="topbar-wrapper">
       <div className="nav-container">
-        <NavAnchor className="logo-group" href="#home" aria-label="Folioxa home">
-          <span className="logo-icon" aria-hidden="true">
-            F
-          </span>
-          <span className="logo-text">Folioxa</span>
+        <NavAnchor className="logo-group" href="#home" aria-label="Home">
+          <img
+            className="logo-image"
+            src={logoIcon}
+            alt="HG"
+            width={36}
+            height={36}
+          />
         </NavAnchor>
         <div className="right-group">
           <nav className="nav-links" aria-label="Main navigation">
-            {NAV_LINKS.map(({ label, href }) => (
+            {SECTION_LINKS.map(({ label, href }) => (
               <NavAnchor key={href} href={href}>
                 {label}
               </NavAnchor>
             ))}
+            <AboutNavLink>About</AboutNavLink>
           </nav>
           <NavAnchor className="contact-btn" href="#contact">
             Contact
@@ -88,6 +112,8 @@ function Footer() {
     </footer>
   )
 }
+
+export { NavAnchor, AboutNavLink }
 
 const SiteChrome = Topbar
 SiteChrome.Footer = Footer

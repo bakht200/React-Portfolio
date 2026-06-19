@@ -105,6 +105,10 @@ export function caseStudyPath(id) {
   return `/case-studies/${id}`
 }
 
+export function caseStudiesListPath() {
+  return '/case-studies'
+}
+
 export function caseStudyPdfUrl(pdf) {
   const base = import.meta.env.BASE_URL
   return `${base}${pdf}`

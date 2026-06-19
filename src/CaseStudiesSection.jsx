@@ -1,29 +1,25 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { COLLAPSED_ITEM_COUNT, EXPANDED_ITEM_COUNT } from './categories'
-import { CASE_STUDIES, caseStudyPath } from './caseStudies'
+import { COLLAPSED_ITEM_COUNT } from './categories'
+import {
+  CASE_STUDIES,
+  caseStudiesListPath,
+  caseStudyPath,
+} from './caseStudies'
 import { NAV_FORWARD } from './pageTransition'
 
 export default function CaseStudiesSection({
   excludeId = null,
   heading = 'Recent Case Studies',
-  collapsible = true,
+  showViewAll = true,
   bordered = false,
   id = 'case-studies',
 }) {
-  const [expanded, setExpanded] = useState(false)
-
   const pool = excludeId
     ? CASE_STUDIES.filter((study) => study.id !== excludeId)
     : CASE_STUDIES
 
-  const limit = expanded ? EXPANDED_ITEM_COUNT : COLLAPSED_ITEM_COUNT
-  const visibleStudies = pool.slice(0, limit)
-  const canExpand = pool.length > COLLAPSED_ITEM_COUNT
-
-  const toggleExpanded = () => {
-    setExpanded((value) => !value)
-  }
+  const visibleStudies = pool.slice(0, COLLAPSED_ITEM_COUNT)
+  const canViewAll = showViewAll && pool.length > COLLAPSED_ITEM_COUNT
 
   return (
     <section className="case-studies-section" id={id}>
@@ -57,14 +53,14 @@ export default function CaseStudiesSection({
             </article>
           ))}
         </div>
-        {collapsible && canExpand && (
-          <button
-            type="button"
+        {canViewAll && (
+          <Link
             className="projects-view-all"
-            onClick={toggleExpanded}
+            to={caseStudiesListPath()}
+            state={NAV_FORWARD}
           >
-            {expanded ? 'View Less' : 'View all Case Studies'}
-          </button>
+            View all Case Studies
+          </Link>
         )}
       </div>
     </section>
