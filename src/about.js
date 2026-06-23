@@ -67,14 +67,12 @@ export const WORK_EXPERIENCE = [
 ]
 
 export const STACK_TOOLS = [
-  { id: 'framer', name: 'Framer', category: 'Web Design' },
   { id: 'figma', name: 'Figma', category: 'General Design' },
-  { id: 'notion', name: 'Notion', category: 'Project Management' },
-  { id: 'jira', name: 'Jira', category: 'Payment Platform' },
-  { id: 'uizard', name: 'Uizard', category: 'Communication' },
-  { id: 'slack', name: 'Slack', category: 'Collaboration' },
-  { id: 'chatgpt', name: 'ChatGPT', category: 'Content Generation' },
-  { id: 'shots', name: 'Shots', category: 'Mockup Creation' },
+  { id: 'framer', name: 'Framer', category: 'Portfolio/Web' },
+  { id: 'notion', name: 'Notion', category: 'Documentation' },
+  { id: 'jira', name: 'Jira', category: 'Project Tracking' },
+  { id: 'protopie', name: 'ProtoPie', category: 'Interactions' },
+  { id: 'chatgpt', name: 'ChatGPT', category: 'Ideas & Research' },
 ]
 
 export const EDUCATION = {

@@ -59,41 +59,13 @@ export function StackToolIcon({ id }) {
     )
   }
 
-  if (id === 'uizard') {
+  if (id === 'protopie') {
     return (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <rect x="3" y="3" width="18" height="18" rx="5" fill="#7C3AED" />
+        <rect x="3" y="3" width="18" height="18" rx="5" fill="#FF4B4B" />
         <path
-          d="M8.5 16.5 12 8l3.5 8.5"
-          stroke="#fff"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path d="M9.8 13.5h4.4" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" />
-        <circle cx="17" cy="7" r="1.2" fill="#FDE68A" />
-      </svg>
-    )
-  }
-
-  if (id === 'slack') {
-    return (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M5.5 14.25a1.75 1.75 0 1 0 0-3.5H7.5V9.25a1.75 1.75 0 1 0 3.5 0V10.75h1.25a1.75 1.75 0 1 0 0 3.5H11v1.25a1.75 1.75 0 1 0-3.5 0V14.25H5.5Z"
-          fill="#E01E5A"
-        />
-        <path
-          d="M9.25 5.5a1.75 1.75 0 1 0 3.5 0V7.5h1.25a1.75 1.75 0 1 0 0 3.5H10.75v1.25a1.75 1.75 0 1 0-3.5 0V9.25H9.25V5.5Z"
-          fill="#36C5F0"
-        />
-        <path
-          d="M18.5 9.75a1.75 1.75 0 1 0 0 3.5H16.5v1.25a1.75 1.75 0 1 0-3.5 0V13.25H11.75a1.75 1.75 0 1 0 0-3.5h1.25V8.5a1.75 1.75 0 1 0 3.5 0V9.75h1.5Z"
-          fill="#2EB67D"
-        />
-        <path
-          d="M14.75 18.5a1.75 1.75 0 1 0-3.5 0V16.5H10a1.75 1.75 0 1 0 0-3.5h1.25v-1.25a1.75 1.75 0 1 0 3.5 0V13h1.25a1.75 1.75 0 1 0 0 3.5h-1.25v1.25Z"
-          fill="#ECB22E"
+          d="M8 16V8l8 4-8 4Z"
+          fill="#fff"
         />
       </svg>
     )

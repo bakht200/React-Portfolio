@@ -432,108 +432,126 @@ const SERVICE_TOOLS = [
   },
 ]
 
-const SERVICES = [
+const EXPERTISE_ITEMS = [
   {
-    id: 'landing-page',
-    title: 'Landing page design',
+    id: 'product-design',
+    title: 'Product Design',
     description:
-      'Designing intuitive user interfaces and seamless user experiences to enhance engagement and usability.',
-    icon: 'figma',
+      'End-to-end design from discovery and wireframes to high-fidelity UI and developer handoff.',
+    icon: 'product',
   },
   {
-    id: 'website-dev',
-    title: 'Website development',
+    id: 'design-systems',
+    title: 'Design Systems',
     description:
-      'Building functional, no-code websites that are easy to manage and optimized for performance across devices.',
-    icon: 'framer',
+      'Scalable component libraries and design tokens that keep teams consistent and shipping faster.',
+    icon: 'systems',
   },
   {
-    id: 'ui-ux',
-    title: 'UI/UX design',
+    id: 'ai-product-design',
+    title: 'AI Product Design',
     description:
-      'Crafting wireframes, prototypes, and design systems that align with your brand and delight your users.',
-    icon: 'xd',
+      'Designing intelligent interfaces — agentic flows, AI onboarding, and trust-first interaction patterns.',
+    icon: 'ai',
   },
   {
-    id: 'brand-identity',
-    title: 'Brand identity',
+    id: 'ux-research',
+    title: 'UX Research',
     description:
-      'Developing cohesive visual identities with logos, color palettes, and typography that make your brand memorable.',
-    icon: 'photoshop',
+      'User interviews, usability testing, and data synthesis that ground design decisions in reality.',
+    icon: 'research',
   },
   {
-    id: 'motion-design',
-    title: 'Motion design',
+    id: 'collaboration',
+    title: 'Cross-functional Collaboration',
     description:
-      'Creating engaging animations and interactive experiences that bring your digital products to life.',
-    icon: 'rive',
+      'Clean Figma handoffs and close partnership with engineering, product, and business stakeholders.',
+    icon: 'collaboration',
   },
 ]
 
-function ServiceIcon({ type }) {
-  if (type === 'figma') {
-    return (
-      <svg className="service-icon-figma" viewBox="0 0 14 20" fill="none" aria-hidden="true">
-        <path d="M7 20C10.866 20 14 16.866 14 13C14 11.343 13.343 10 12 10H7V20Z" fill="#ffffff" />
-        <path d="M0 13C0 16.866 3.134 20 7 20V10H2C0.657 10 0 11.343 0 13Z" fill="#ffffff" />
-        <path d="M0 7C0 3.134 3.134 0 7 0C10.866 0 14 3.134 14 7C14 10.866 10.866 14 7 14H0V7Z" fill="#ffffff" />
-        <path d="M0 7H7C8.657 7 10 5.657 10 4C10 2.343 8.657 1 7 1C5.343 1 4 2.343 4 4V7H0Z" fill="#ffffff" />
-        <path d="M0 7V10H4C5.657 10 7 8.657 7 7C7 5.343 5.657 4 4 4H0V7Z" fill="#ffffff" />
-      </svg>
-    )
-  }
-
-  if (type === 'framer') {
-    return (
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M2 14L8 2L14 14H10L8 10L6 14H2Z" fill="#fff" />
-      </svg>
-    )
-  }
-
-  if (type === 'xd') {
+function ExpertiseIcon({ type }) {
+  if (type === 'product') {
     return (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M10 8L7 16H9L9.8 13.5H12.2L13 16H15L12 8H10ZM10.5 11.5L11.5 9.2L12.5 11.5H10.5Z" fill="#fff" />
-        <path d="M15 8V16H17V13.5H18.5L19.5 16H21.5L20.2 13C20.8 12.6 21.2 11.8 21.2 10.8C21.2 9.2 20 8 18.2 8H15ZM17 10H18C18.6 10 19 10.3 19 10.8C19 11.3 18.6 11.6 18 11.6H17V10Z" fill="#fff" />
+        <rect x="4" y="4" width="7" height="7" rx="1.5" stroke="#fff" strokeWidth="1.8" />
+        <rect x="13" y="4" width="7" height="7" rx="1.5" stroke="#fff" strokeWidth="1.8" />
+        <rect x="4" y="13" width="7" height="7" rx="1.5" stroke="#fff" strokeWidth="1.8" />
+        <rect x="13" y="13" width="7" height="7" rx="1.5" stroke="#fff" strokeWidth="1.8" />
       </svg>
     )
   }
 
-  if (type === 'photoshop') {
+  if (type === 'systems') {
     return (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M9.5 8C7.5 8 6.5 9 6.5 10.2C6.5 12.5 10 12 10 13.5C10 14.3 9.2 15 8 15C7 15 6.2 14.6 5.5 14L6.2 12.5C6.7 12.9 7.4 13.2 8 13.2C8.6 13.2 9 12.9 9 12.4C9 11.2 5.5 11.5 5.5 9.2C5.5 7.5 6.8 6.5 8.8 6.5C9.6 6.5 10.3 6.7 11 7L10.3 8.5C9.9 8.2 9.2 8 8.5 8H9.5Z" fill="#fff" />
-        <path d="M13 7H16.5C18 7 19 8 19 9.5C19 11.5 17.2 12 16 12L19 17H17L14.5 12.5H13V17H11V7H13ZM13 8.8V11H15.5C16.3 11 17 10.5 17 9.5C17 8.7 16.5 8.2 15.5 8.2H13V8.8Z" fill="#fff" />
+        <circle cx="12" cy="12" r="3" stroke="#fff" strokeWidth="1.8" />
+        <path
+          d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"
+          stroke="#fff"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+      </svg>
+    )
+  }
+
+  if (type === 'ai') {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M12 3l1.8 5.5L19 10l-5.2 1.5L12 17l-1.8-5.5L5 10l5.2-1.5L12 3Z"
+          stroke="#fff"
+          strokeWidth="1.8"
+          strokeLinejoin="round"
+        />
+      </svg>
+    )
+  }
+
+  if (type === 'research') {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="10.5" cy="10.5" r="5.5" stroke="#fff" strokeWidth="1.8" />
+        <path d="M15 15l5.5 5.5" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" />
       </svg>
     )
   }
 
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="7" stroke="#fff" strokeWidth="2" />
-      <path d="M8 12C8 9.79 9.79 8 12 8" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M17 7l-1.5 3M7 7l1.5 3M12 4v3M5 12h3M16 12h3M12 17v3"
+        stroke="#fff"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M8.5 14.5c1.2 1.2 2.8 1.8 4.5 1.8M15.5 9.5c-1.2-1.2-2.8-1.8-4.5-1.8"
+        stroke="#fff"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
     </svg>
   )
 }
 
-function ServicesSection() {
+function ExpertiseSection() {
   const serviceTools = [...SERVICE_TOOLS, ...SERVICE_TOOLS]
 
   return (
-    <section className="services-section" id="services">
+    <section className="services-section" id="expertise">
       <div className="services-inner">
         <div className="services-top">
           <div className="services-left">
-            <h2 className="services-heading">
-              Services that supercharge your business.
-            </h2>
+            <span className="services-badge">My Expertise</span>
+            <h2 className="services-heading">What I bring to a team.</h2>
             <p className="services-description">
-              Helping businesses standout with brand identity packaging that
-              captivates and converts effectively.
+              I work across the full product lifecycle — from understanding user
+              problems to shipping polished, developer-ready designs.
             </p>
             <a className="book-call-btn services-cta" href="#contact">
-              <span>Book a Free Call</span>
+              <span>Get In Touch</span>
               <span className="book-call-icon" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path
@@ -548,14 +566,14 @@ function ServicesSection() {
             </a>
           </div>
 
-          <div className="services-cards" aria-label="Service offerings">
-            {SERVICES.map((service) => (
-              <article className="service-card" key={service.id}>
+          <div className="services-cards" aria-label="Areas of expertise">
+            {EXPERTISE_ITEMS.map((item) => (
+              <article className="service-card" key={item.id}>
                 <div className="service-card-icon" aria-hidden="true">
-                  <ServiceIcon type={service.icon} />
+                  <ExpertiseIcon type={item.icon} />
                 </div>
-                <h3 className="service-card-title">{service.title}</h3>
-                <p className="service-card-description">{service.description}</p>
+                <h3 className="service-card-title">{item.title}</h3>
+                <p className="service-card-description">{item.description}</p>
               </article>
             ))}
           </div>
@@ -580,29 +598,29 @@ function ServicesSection() {
   )
 }
 
-const HOW_IT_WORKS_STEPS = [
+const HOW_I_WORK_STEPS = [
   {
-    id: 'share',
+    id: 'understand',
     number: '01',
-    title: 'Share Your Idea',
+    title: 'Understand the Problem',
     description:
-      "Tell me what you need — a new website, redesign, or template customization. We'll discuss your goals and vision clearly, together.",
+      'I start with research — talking to users, mapping existing workflows, and aligning with stakeholders on what success actually looks like. No screens until the problem is clear.',
     icon: 'bulb',
   },
   {
     id: 'design',
     number: '02',
-    title: 'Design & Build',
+    title: 'Design & Iterate',
     description:
-      "I'll craft a modern, responsive design in Framer and bring it to life with smooth animations and smart layouts seamlessly consistently.",
+      'From wireframes to high-fidelity UI, I design in tight loops — testing assumptions early, refining based on feedback, and building design systems that scale with the product.',
     icon: 'pen',
   },
   {
-    id: 'launch',
+    id: 'ship',
     number: '03',
-    title: 'Launch & Care',
+    title: 'Ship & Support',
     description:
-      "Once you're happy, we'll launch your site. I'll also provide post-launch support to make sure everything runs perfectly smoothly.",
+      'I stay involved through developer handoff to make sure what ships matches what was designed — and keep iterating post-launch based on real usage data.',
     icon: 'rocket',
   },
 ]
@@ -658,29 +676,32 @@ function HowItWorksIcon({ type }) {
   )
 }
 
-function HowItWorksSection() {
+function HowIWorkSection() {
   return (
     <ScrollRevealSection
       className="how-section"
-      id="how-it-works"
-      ariaLabel="How it works"
+      id="how-i-work"
+      ariaLabel="How I work"
     >
       <div className="how-inner reveal-group">
         <RevealItem>
-          <span className="how-badge">How it works</span>
-          <h2 className="how-heading">Here&apos;s what working together looks like</h2>
+          <span className="how-badge">How I Work</span>
+          <h2 className="how-heading">How I approach a design problem.</h2>
+          <p className="how-subheading">
+            Not a rigid process — a mindset that adapts to the problem at hand.
+          </p>
         </RevealItem>
 
         <RevealItem className="how-cards-wrap" delay={120}>
           <div className="how-cards">
             <article className="how-card how-card--1">
               <div className="how-card-inner">
-                <span className="how-card-number">{HOW_IT_WORKS_STEPS[0].number}</span>
-                <h3 className="how-card-title">{HOW_IT_WORKS_STEPS[0].title}</h3>
+                <span className="how-card-number">{HOW_I_WORK_STEPS[0].number}</span>
+                <h3 className="how-card-title">{HOW_I_WORK_STEPS[0].title}</h3>
                 <div className="how-card-icon" aria-hidden="true">
-                  <HowItWorksIcon type={HOW_IT_WORKS_STEPS[0].icon} />
+                  <HowItWorksIcon type={HOW_I_WORK_STEPS[0].icon} />
                 </div>
-                <p className="how-card-text">{HOW_IT_WORKS_STEPS[0].description}</p>
+                <p className="how-card-text">{HOW_I_WORK_STEPS[0].description}</p>
               </div>
             </article>
 
@@ -707,12 +728,12 @@ function HowItWorksSection() {
 
             <article className="how-card how-card--2">
               <div className="how-card-inner">
-                <span className="how-card-number">{HOW_IT_WORKS_STEPS[1].number}</span>
-                <h3 className="how-card-title">{HOW_IT_WORKS_STEPS[1].title}</h3>
+                <span className="how-card-number">{HOW_I_WORK_STEPS[1].number}</span>
+                <h3 className="how-card-title">{HOW_I_WORK_STEPS[1].title}</h3>
                 <div className="how-card-icon" aria-hidden="true">
-                  <HowItWorksIcon type={HOW_IT_WORKS_STEPS[1].icon} />
+                  <HowItWorksIcon type={HOW_I_WORK_STEPS[1].icon} />
                 </div>
-                <p className="how-card-text">{HOW_IT_WORKS_STEPS[1].description}</p>
+                <p className="how-card-text">{HOW_I_WORK_STEPS[1].description}</p>
               </div>
             </article>
 
@@ -739,12 +760,12 @@ function HowItWorksSection() {
 
             <article className="how-card how-card--3">
               <div className="how-card-inner">
-                <span className="how-card-number">{HOW_IT_WORKS_STEPS[2].number}</span>
-                <h3 className="how-card-title">{HOW_IT_WORKS_STEPS[2].title}</h3>
+                <span className="how-card-number">{HOW_I_WORK_STEPS[2].number}</span>
+                <h3 className="how-card-title">{HOW_I_WORK_STEPS[2].title}</h3>
                 <div className="how-card-icon how-card-icon--rocket" aria-hidden="true">
-                  <HowItWorksIcon type={HOW_IT_WORKS_STEPS[2].icon} />
+                  <HowItWorksIcon type={HOW_I_WORK_STEPS[2].icon} />
                 </div>
-                <p className="how-card-text">{HOW_IT_WORKS_STEPS[2].description}</p>
+                <p className="how-card-text">{HOW_I_WORK_STEPS[2].description}</p>
               </div>
             </article>
           </div>
@@ -756,52 +777,52 @@ function HowItWorksSection() {
 
 const FAQ_ITEMS = [
   {
-    id: 'services',
-    question: 'What services do you offer?',
+    id: 'full-time',
+    question: 'Are you available for full-time remote roles?',
     answer:
-      'I specialize in UI/UX design, Framer development, and responsive web experiences tailored for businesses and startups.',
+      'Yes. I am actively open to full-time remote product design roles with teams across the US, EU, and worldwide. I bring 5+ years of experience shipping enterprise SaaS, AI products, and healthcare platforms.',
   },
   {
-    id: 'custom',
-    question: 'Do you create custom websites or only templates?',
+    id: 'freelance',
+    question: 'Are you available for freelance or contract work?',
     answer:
-      'I build fully custom websites from scratch based on your brand and goals. Templates can be used as a starting point when they fit your needs, but every project is tailored to you.',
+      'Yes, selectively. I take on freelance and contract engagements for product design, design systems, and UX research — especially for startups and teams that need senior-level design without a full-time hire.',
   },
   {
-    id: 'timeline',
-    question: 'How long does it take to complete a website project?',
+    id: 'industries',
+    question: 'What industries have you designed for?',
     answer:
-      'Most projects take 2–4 weeks depending on scope, content readiness, and revisions. I’ll share a clear timeline after we discuss your requirements.',
-  },
-  {
-    id: 'existing-brand',
-    question: 'Can you work with my existing brand or website?',
-    answer:
-      'Yes. I can redesign your current site, refresh your brand visuals, or build on top of what you already have while keeping your identity consistent.',
-  },
-  {
-    id: 'revisions',
-    question: 'Do you offer revisions after the project is delivered?',
-    answer:
-      'Yes. Each project includes revision rounds during development, plus post-launch support so small tweaks and fixes are covered after delivery.',
-  },
-  {
-    id: 'framer-seo',
-    question: 'Is Framer good for SEO and performance?',
-    answer:
-      'Framer sites are fast, mobile-friendly, and SEO-ready with clean code, meta controls, and strong performance out of the box when set up properly.',
+      'Healthcare & HIPAA, AI products, HRMS & HCM, fintech, e-commerce, and enterprise SaaS. I have shipped products used by clinical teams, HR departments, and consumer-facing platforms.',
   },
   {
     id: 'process',
-    question: "What's your process for starting a new project?",
+    question: 'What does your design process look like?',
     answer:
-      'We start with a free call to understand your goals, then move through discovery, design, development, and launch—with clear updates at every step.',
+      'I start by understanding the problem through research and stakeholder alignment, then move into iterative design — wireframes to high-fidelity UI — and stay involved through developer handoff and post-launch iteration.',
   },
   {
-    id: 'get-started',
-    question: 'How can I get started with you?',
+    id: 'ai',
+    question: 'Do you have experience designing AI products?',
     answer:
-      'Book a free call through the contact button on this site. Share your project details and we’ll map out the next steps together.',
+      'Yes. I have designed AI coaching platforms, agentic workflows, and AI onboarding flows — with a focus on trust-first interaction patterns that make intelligent features feel transparent and useful.',
+  },
+  {
+    id: 'design-system',
+    question: 'Can you work with an existing design system?',
+    answer:
+      'Absolutely. I regularly extend and contribute to existing design systems — building new components, refining tokens, and ensuring consistency across product surfaces while shipping new features.',
+  },
+  {
+    id: 'tools',
+    question: 'What tools do you use?',
+    answer:
+      'Figma for design and handoff, ProtoPie for interactions, Framer for portfolio and web, Notion for documentation, Jira for project tracking, and ChatGPT for research and ideation.',
+  },
+  {
+    id: 'start',
+    question: 'How quickly can you start?',
+    answer:
+      'For full-time roles, I can typically start within two to four weeks depending on notice periods. For contract work, I can often begin within one to two weeks after we align on scope.',
   },
 ]
 
@@ -878,13 +899,15 @@ function CtaSection() {
           <RevealItem delay={80}>
           <div className="cta-body">
             <h2 className="cta-heading">
-              <span className="cta-heading-line">Ready to Automate Smarter?</span>
-              <span className="cta-heading-line">Let&apos;s Build Together</span>
+              <span className="cta-heading-line">Let&apos;s build something great together.</span>
             </h2>
-            <p className="cta-subheading">Schedule a call and begin automating</p>
+            <p className="cta-subheading">
+              Open to full-time remote roles, freelance projects, and design
+              collaborations across the US, EU, and worldwide.
+            </p>
 
             <a className="book-call-btn cta-btn" href="#contact">
-              <span>Book a Free Call</span>
+              <span>Get In Touch</span>
               <span className="book-call-icon" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path
@@ -941,7 +964,19 @@ function CtaSection() {
   )
 }
 
-const BENTO_STEPS = ['Create Design', 'Build Framer', 'Launch']
+const BENTO_SKILL_PILLS = [
+  'Product Design',
+  'Design Systems',
+  'AI UX',
+  'UX Research',
+  'Prototyping',
+  'Dev Handoff',
+]
+
+const BENTO_STACK_TOOLS = [
+  ['Figma', 'Framer', 'ProtoPie'],
+  ['Notion', 'Jira', 'Figma AI'],
+]
 
 const BENTO_STATS = [
   { label: 'Delivered on Time', icon: 'clock' },
@@ -972,26 +1007,19 @@ function BentoSection() {
             />
           </article>
 
-          <article className="bento-card bento-steps">
-            <h3 className="bento-steps-title">3 steps for your success</h3>
-            <ul className="bento-steps-list">
-              {BENTO_STEPS.map((step) => (
-                <li key={step}>
-                  <span className="bento-step-check" aria-hidden="true">
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <path
-                        d="M2.5 6L5 8.5L9.5 3.5"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                  {step}
-                </li>
+          <article className="bento-card bento-steps bento-stack">
+            <span className="bento-feature-tag">My Stack</span>
+            <div className="bento-stack-rows">
+              {BENTO_STACK_TOOLS.map((row) => (
+                <div className="bento-stack-row" key={row.join('-')}>
+                  {row.map((tool) => (
+                    <span className="bento-stack-tool" key={tool}>
+                      {tool}
+                    </span>
+                  ))}
+                </div>
               ))}
-            </ul>
+            </div>
             <div className="bento-steps-deco" aria-hidden="true" />
           </article>
 
@@ -1034,9 +1062,13 @@ function BentoSection() {
               <img src={bentoOne} alt="" loading="lazy" />
             </div>
             <div className="bento-feature-copy">
-              <h3 className="bento-feature-title">24-Hour Email Support</h3>
+              <span className="bento-feature-tag">Design Philosophy</span>
+              <blockquote className="bento-feature-quote">
+                &ldquo;I design products that feel obvious in hindsight.&rdquo;
+              </blockquote>
               <p className="bento-feature-text">
-                Reach out anytime, and get help within 24 hours.
+                5+ years turning complex problems into interfaces people actually
+                enjoy using.
               </p>
             </div>
           </article>
@@ -1046,20 +1078,12 @@ function BentoSection() {
               <img src={bentoTwo} alt="" loading="lazy" />
             </div>
             <div className="bento-feature-copy bento-feature-copy--light">
-              <p className="bento-feature-stat">100%</p>
-              <p className="bento-feature-stat-label">Happy Clients</p>
-              <div className="bento-feature-stars" aria-label="5 star rating">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <svg
-                    key={i}
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 4L14.5 9.5L20.5 10.2L16 14.2L17.2 20.2L12 17.2L6.8 20.2L8 14.2L3.5 10.2L9.5 9.5L12 4Z" />
-                  </svg>
+              <span className="bento-feature-tag bento-feature-tag--light">Core Skills</span>
+              <div className="bento-skill-pills" aria-label="Core skills">
+                {BENTO_SKILL_PILLS.map((skill) => (
+                  <span className="bento-skill-pill" key={skill}>
+                    {skill}
+                  </span>
                 ))}
               </div>
             </div>
@@ -1102,13 +1126,13 @@ function HomePage() {
           <ProjectsSection />
         </ScrollReveal>
         <ScrollReveal>
-          <ServicesSection />
+          <ExpertiseSection />
         </ScrollReveal>
         <ScrollReveal>
           <CaseStudiesSection />
         </ScrollReveal>
         <ScrollReveal>
-          <HowItWorksSection />
+          <HowIWorkSection />
         </ScrollReveal>
         <ScrollReveal>
           <FaqSection />

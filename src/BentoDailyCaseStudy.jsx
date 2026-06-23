@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import { caseStudyPath, getDailyCaseStudy } from './caseStudies'
+import { caseStudyPath, getFeaturedCaseStudy } from './caseStudies'
 import { NAV_FORWARD } from './pageTransition'
 
 export default function BentoDailyCaseStudy() {
-  const study = getDailyCaseStudy()
+  const study = getFeaturedCaseStudy()
 
   return (
     <article className="bento-card bento-feature bento-feature--case-study">
@@ -22,6 +22,9 @@ export default function BentoDailyCaseStudy() {
             {study.date}
           </time>
           <h3 className="bento-case-study-title">{study.title}</h3>
+          {study.excerpt && (
+            <p className="bento-case-study-excerpt">{study.excerpt}</p>
+          )}
           <span className="bento-case-study-cta">
             Read case study
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">

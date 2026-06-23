@@ -96,18 +96,7 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-inner">
-        <p className="footer-credit">Create By @ru Design</p>
-        <a
-          className="footer-framer"
-          href="https://www.framer.com/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M2 14L8 2L14 14H10L8 10L6 14H2Z" fill="currentColor" />
-          </svg>
-          Built in Framer
-        </a>
+        <p className="footer-credit">© 2026 Haider Ghauri. All rights reserved.</p>
       </div>
     </footer>
   )

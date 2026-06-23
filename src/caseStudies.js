@@ -9,12 +9,15 @@ const CASE_STUDY_PDF = 'case-studies/pomhealthcasestudy.pdf'
 export const CASE_STUDIES = [
   {
     id: 'ff-galaxy-hrms',
-    title: 'FF Galaxy HRMS',
-    date: 'Nov 10, 2024',
-    dateTime: '2024-11-10',
+    title: 'Galaxy HCM — Enterprise HR Redesign',
+    date: '2024',
+    dateTime: '2024',
     time: '9:30 AM',
     image: bentoOne,
     pdf: CASE_STUDY_PDF,
+    excerpt:
+      'How I redesigned an enterprise HR platform used by 500+ employees — end-to-end, as the sole designer.',
+    featured: true,
   },
   {
     id: 'designer-developer-collab',
@@ -62,15 +65,6 @@ export const CASE_STUDIES = [
     pdf: CASE_STUDY_PDF,
   },
   {
-    id: 'inventory-ops-redesign',
-    title: 'Inventory & Ops Dashboard Redesign',
-    date: 'Jul 30, 2024',
-    dateTime: '2024-07-30',
-    time: '1:15 PM',
-    image: bentoTwo,
-    pdf: CASE_STUDY_PDF,
-  },
-  {
     id: 'ecommerce-conversion',
     title: 'E-Commerce Conversion Optimization',
     date: 'Jul 8, 2024',
@@ -94,6 +88,10 @@ const MS_PER_DAY = 24 * 60 * 60 * 1000
 
 export function getCaseStudyById(id) {
   return CASE_STUDIES.find((study) => study.id === id)
+}
+
+export function getFeaturedCaseStudy() {
+  return CASE_STUDIES.find((study) => study.featured) ?? CASE_STUDIES[0]
 }
 
 export function getDailyCaseStudy(date = new Date()) {

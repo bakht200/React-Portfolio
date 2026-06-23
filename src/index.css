@@ -39,8 +39,10 @@
   --layout-padding-x: 16px;
   --layout-padding-x-mobile: 12px;
 
-  --landing-section-gap: 72px;
-  --landing-section-gap-mobile: 48px;
+  --landing-section-gap: 56px;
+  --landing-section-gap-mobile: 40px;
+  --landing-topbar-gap: 20px;
+  --landing-topbar-gap-mobile: 16px;
   --landing-content-gap: calc(var(--landing-section-gap) / 2);
   --landing-content-gap-mobile: calc(var(--landing-section-gap-mobile) / 2);
 

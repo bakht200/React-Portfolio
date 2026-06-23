@@ -6,8 +6,10 @@ export default function AboutPage() {
   return (
     <>
       <SiteChrome />
-      <AboutSection showBack />
-      <SiteChrome.Footer />
+      <main className="about-page">
+        <AboutSection showBack />
+        <SiteChrome.Footer />
+      </main>
     </>
   )
 }
