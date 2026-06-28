@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import BentoDailyCaseStudy from './BentoDailyCaseStudy'
+import BentoIndustriesCard from './BentoIndustriesCard'
+import { caseStudyPath, getFeaturedCaseStudy } from './caseStudies'
 import CaseStudiesSection from './CaseStudiesSection'
 import ProjectsSection from './ProjectsSection'
 import RouteTransition from './RouteTransition'
@@ -9,9 +10,14 @@ import { aboutPath } from './about'
 import { NAV_FORWARD } from './pageTransition'
 import { scrollToSection } from './pageTransition'
 import profilePhoto from './assets/recommend-optimized.png'
-import bentoOne from './assets/bento-1.jpg'
-import bentoTwo from './assets/bento-2.jpg'
+import strategyWorkspace from './assets/strategy-workspace.jpg'
+import spotlightDevice from './assets/spotlight-device.jpg'
+import ctaAvatarOne from './assets/cta-avatar-1.jpg'
+import ctaAvatarTwo from './assets/cta-avatar-2.jpg'
+import ctaAvatarThree from './assets/cta-avatar-3.jpg'
+import ctaAvatarFour from './assets/cta-avatar-4.jpg'
 import './App.css'
+import './bento-showcase.css'
 
 const RevealContext = createContext(true)
 
@@ -103,7 +109,7 @@ function ScrollRevealSection({ id, className, ariaLabel, children }) {
       <section
         ref={ref}
         id={id}
-        className={`${className}${visible ? ' reveal-section--visible' : ''}`}
+        className={`reveal-section ${className}${visible ? ' reveal-section--visible' : ''}`}
         aria-label={ariaLabel}
       >
         {children}
@@ -777,52 +783,40 @@ function HowIWorkSection() {
 
 const FAQ_ITEMS = [
   {
-    id: 'full-time',
-    question: 'Are you available for full-time remote roles?',
+    id: 'timeline',
+    question: 'How long does a typical project take?',
     answer:
-      'Yes. I am actively open to full-time remote product design roles with teams across the US, EU, and worldwide. I bring 5+ years of experience shipping enterprise SaaS, AI products, and healthcare platforms.',
+      'Most product design engagements run 4–8 weeks depending on scope — from discovery and wireframes through high-fidelity UI and developer handoff. Smaller landing pages or design system updates can ship in 2–3 weeks.',
   },
   {
-    id: 'freelance',
-    question: 'Are you available for freelance or contract work?',
+    id: 'clients',
+    question: 'Do you work with startups or only large brands?',
     answer:
-      'Yes, selectively. I take on freelance and contract engagements for product design, design systems, and UX research — especially for startups and teams that need senior-level design without a full-time hire.',
+      'Both. I work with early-stage startups, growth teams, and enterprise organizations — from solo founders needing a first product experience to HR, healthcare, and fintech teams shipping at scale.',
   },
   {
-    id: 'industries',
-    question: 'What industries have you designed for?',
+    id: 'packages',
+    question: 'What\u2019s included in your design packages?',
     answer:
-      'Healthcare & HIPAA, AI products, HRMS & HCM, fintech, e-commerce, and enterprise SaaS. I have shipped products used by clinical teams, HR departments, and consumer-facing platforms.',
+      'Packages typically include user research, wireframes, high-fidelity UI, interactive prototypes, a documented design system, and developer-ready specs. Every engagement is scoped to your goals before we start.',
   },
   {
-    id: 'process',
-    question: 'What does your design process look like?',
+    id: 'development',
+    question: 'Do you provide development services too?',
     answer:
-      'I start by understanding the problem through research and stakeholder alignment, then move into iterative design — wireframes to high-fidelity UI — and stay involved through developer handoff and post-launch iteration.',
-  },
-  {
-    id: 'ai',
-    question: 'Do you have experience designing AI products?',
-    answer:
-      'Yes. I have designed AI coaching platforms, agentic workflows, and AI onboarding flows — with a focus on trust-first interaction patterns that make intelligent features feel transparent and useful.',
-  },
-  {
-    id: 'design-system',
-    question: 'Can you work with an existing design system?',
-    answer:
-      'Absolutely. I regularly extend and contribute to existing design systems — building new components, refining tokens, and ensuring consistency across product surfaces while shipping new features.',
-  },
-  {
-    id: 'tools',
-    question: 'What tools do you use?',
-    answer:
-      'Figma for design and handoff, ProtoPie for interactions, Framer for portfolio and web, Notion for documentation, Jira for project tracking, and ChatGPT for research and ideation.',
+      'Yes. As a Framer expert, I build responsive marketing sites and product landing pages in Framer. For app development, I partner closely with engineering teams and deliver handoff assets built for smooth implementation.',
   },
   {
     id: 'start',
-    question: 'How quickly can you start?',
+    question: 'How do we start a project?',
     answer:
-      'For full-time roles, I can typically start within two to four weeks depending on notice periods. For contract work, I can often begin within one to two weeks after we align on scope.',
+      'Book a free 15-minute call to discuss your goals, timeline, and budget. From there I send a short proposal with scope, milestones, and pricing — then we kick off with a discovery session.',
+  },
+  {
+    id: 'ongoing',
+    question: 'Can you help with ongoing updates after launch?',
+    answer:
+      'Absolutely. I offer post-launch support for design iterations, new features, A/B test variants, and design system maintenance — on a retainer or per-project basis.',
   },
 ]
 
@@ -841,8 +835,36 @@ function FaqSection() {
     >
       <div className="faq-inner reveal-group">
         <RevealItem>
-          <span className="faq-badge">FAQs</span>
-          <h2 className="faq-heading">Frequently Asked Questions</h2>
+          <div className="faq-header">
+            <span className="faq-badge">&gt; GOT QUESTIONS &lt;</span>
+            <div className="faq-heading-row">
+              <h2 className="faq-heading">We&apos;ve got answers</h2>
+              <p className="faq-heading-note" aria-hidden="true">
+                <span>Let&apos;s clear things up</span>
+                <svg
+                  className="faq-heading-note-arrow"
+                  width="48"
+                  height="32"
+                  viewBox="0 0 48 32"
+                  fill="none"
+                >
+                  <path
+                    d="M4 28C18 8 28 4 44 10"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M36 8L44 10L42 18"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </p>
+            </div>
+          </div>
         </RevealItem>
 
         <RevealItem className="faq-list-wrap" delay={100}>
@@ -851,24 +873,25 @@ function FaqSection() {
               const isOpen = openId === item.id
 
               return (
-                <RevealItem key={item.id} delay={160 + index * 60}>
-                  <article className={`faq-item${isOpen ? ' faq-item--open' : ''}`}>
+                <article className={`faq-item${isOpen ? ' faq-item--open' : ''}`} key={item.id}>
                   <button
                     type="button"
                     className="faq-question"
                     onClick={() => toggleFaq(item.id)}
                     aria-expanded={isOpen}
                   >
-                    <span className="faq-question-text">{item.question}</span>
+                    <span className="faq-question-text">
+                      {index + 1}. {item.question}
+                    </span>
                     <span
                       className={`faq-icon${isOpen ? ' faq-icon--open' : ''}`}
                       aria-hidden="true"
                     >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                         <path
                           d="M12 5V19M5 12H19"
                           stroke="currentColor"
-                          strokeWidth="2"
+                          strokeWidth="2.5"
                           strokeLinecap="round"
                         />
                       </svg>
@@ -879,10 +902,23 @@ function FaqSection() {
                       <p>{item.answer}</p>
                     </div>
                   </div>
-                  </article>
-                </RevealItem>
+                </article>
               )
             })}
+          </div>
+        </RevealItem>
+
+        <RevealItem delay={220}>
+          <div className="faq-footer">
+            <div className="faq-footer-avatars" aria-hidden="true">
+              <span className="faq-footer-avatar faq-footer-avatar--1" />
+              <span className="faq-footer-avatar faq-footer-avatar--2" />
+              <span className="faq-footer-avatar faq-footer-avatar--3" />
+            </div>
+            <p className="faq-footer-title">Still have questions?</p>
+            <a className="faq-footer-btn" href="#contact">
+              Let&apos;s talk
+            </a>
           </div>
         </RevealItem>
       </div>
@@ -894,69 +930,46 @@ function CtaSection() {
   return (
     <ScrollRevealSection className="cta-section" id="contact" ariaLabel="Contact">
       <div className="cta-inner reveal-group">
-        <RevealItem delay={0}>
-          <div className="cta-card">
-          <RevealItem delay={80}>
-          <div className="cta-body">
-            <h2 className="cta-heading">
-              <span className="cta-heading-line">Let&apos;s build something great together.</span>
-            </h2>
-            <p className="cta-subheading">
-              Open to full-time remote roles, freelance projects, and design
-              collaborations across the US, EU, and worldwide.
-            </p>
-
-            <a className="book-call-btn cta-btn" href="#contact">
-              <span>Get In Touch</span>
-              <span className="book-call-icon" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M5 12H19M19 12L12 5M19 12L12 19"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </a>
-
-            <p className="cta-slots">
-              <span className="cta-slots-dot" aria-hidden="true" />
-              Open to Remote Work
-            </p>
-          </div>
-          </RevealItem>
-
-          <RevealItem delay={180}>
-          <div className="cta-footer">
-            <div className="cta-social" aria-label="Social links">
-              <a className="cta-social-link" href="#" aria-label="X (Twitter)">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-              <span className="cta-social-divider" aria-hidden="true" />
-              <a className="cta-social-link" href="#" aria-label="Instagram">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.8" />
-                  <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.8" />
-                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
-                </svg>
-              </a>
-              <span className="cta-social-divider" aria-hidden="true" />
-              <a className="cta-social-link" href="#" aria-label="YouTube">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M21.58 7.18a2.5 2.5 0 0 0-1.76-1.77C18.12 5 12 5 12 5s-6.12 0-7.82.41a2.5 2.5 0 0 0-1.76 1.77A26.2 26.2 0 0 0 2 12a26.2 26.2 0 0 0 .42 4.82 2.5 2.5 0 0 0 1.76 1.77C5.88 19 12 19 12 19s6.12 0 7.82-.41a2.5 2.5 0 0 0 1.76-1.77A26.2 26.2 0 0 0 22 12a26.2 26.2 0 0 0-.42-4.82zM10 15.5v-7l6 3.5-6 3.5z" />
-                </svg>
-              </a>
+        <RevealItem>
+          <div className="cta-banner">
+            <div className="cta-banner-bg" aria-hidden="true">
+              <span className="cta-banner-ring cta-banner-ring--1" />
+              <span className="cta-banner-ring cta-banner-ring--2" />
+              <span className="cta-banner-ring cta-banner-ring--3" />
             </div>
 
-            <a className="cta-email" href="mailto:hello@thomas.design">
-              hello@thomas.design
-            </a>
-          </div>
-          </RevealItem>
+            <div className="cta-banner-layout">
+              <div className="cta-banner-copy">
+                <p className="cta-banner-eyebrow">Let&apos;s build something great</p>
+                <h2 className="cta-banner-heading">Ready to start your next project?</h2>
+                <a className="cta-banner-btn" href="mailto:hello@haiderghauri.com">
+                  Get started
+                </a>
+              </div>
+
+              <div className="cta-booking-card">
+                <p className="cta-booking-status">
+                  <span className="cta-booking-dot" aria-hidden="true" />
+                  Available for projects
+                </p>
+                <div className="cta-booking-avatars" aria-hidden="true">
+                  <img
+                    className="cta-booking-avatar"
+                    src={profilePhoto}
+                    alt=""
+                    width={40}
+                    height={40}
+                  />
+                  <span className="cta-booking-plus">+</span>
+                  <span className="cta-booking-you">You</span>
+                </div>
+                <h3 className="cta-booking-title">Quick 15-minute call</h3>
+                <p className="cta-booking-text">Pick a time that works for you.</p>
+                <a className="cta-booking-btn" href="mailto:hello@haiderghauri.com">
+                  Book a free call
+                </a>
+              </div>
+            </div>
           </div>
         </RevealItem>
       </div>
@@ -964,132 +977,231 @@ function CtaSection() {
   )
 }
 
-const BENTO_SKILL_PILLS = [
-  'Product Design',
-  'Design Systems',
-  'AI UX',
-  'UX Research',
-  'Prototyping',
-  'Dev Handoff',
+const BENTO_CSAT_MOODS = ['sad', 'neutral', 'okay', 'good', 'excellent']
+
+function BentoCsatFace({ mood, active = false }) {
+  const fill = active ? '#6366f1' : '#ddd6fe'
+  const stroke = active ? '#0f172a' : '#818cf8'
+
+  const mouths = {
+    sad: 'M11 21c1.4-1.6 3.2-2.4 5-2.4s3.6.8 5 2.4',
+    neutral: 'M12.5 21h7',
+    okay: 'M12 20.5c1.2 1 2.6 1.5 4 1.5s2.8-.5 4-1.5',
+    good: 'M12 20c1.4 1.4 3 2 4 2s2.6-.6 4-2',
+    excellent: 'M11.5 19.5c1.6 2 3.4 2.8 4.5 2.8s2.9-.8 4.5-2.8',
+  }
+
+  return (
+    <span className={`bento-csat-face${active ? ' bento-csat-face--active' : ''}`}>
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="15" fill={fill} />
+        <circle cx="12" cy="13.5" r="1.35" fill={stroke} />
+        <circle cx="20" cy="13.5" r="1.35" fill={stroke} />
+        <path
+          d={mouths[mood]}
+          fill="none"
+          stroke={stroke}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+      </svg>
+    </span>
+  )
+}
+const BENTO_PERFORMANCE_SCORES = [
+  { value: 99, label: 'Performance' },
+  { value: 100, label: 'SEO' },
+  { value: 98, label: 'Accessibility' },
 ]
 
-const BENTO_STACK_TOOLS = [
-  ['Figma', 'Framer', 'ProtoPie'],
-  ['Notion', 'Jira', 'Figma AI'],
-]
+function BentoPerformanceRing({ value, label, featured = false }) {
+  const radius = featured ? 15.2 : 12.4
+  const strokeWidth = featured ? 3.4 : 2.8
+  const circumference = 2 * Math.PI * radius
+  const offset = circumference - (value / 100) * circumference
 
-const BENTO_STATS = [
-  { label: 'Delivered on Time', icon: 'clock' },
-  { label: 'High-Quality Design', icon: 'star' },
-  { label: 'Client Satisfaction', icon: 'heart' },
-]
+  return (
+    <div className={`bento-performance-ring${featured ? ' bento-performance-ring--featured' : ''}`}>
+      <div className="bento-performance-ring-chart">
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <circle
+            className="bento-performance-ring-bg"
+            cx="18"
+            cy="18"
+            r={radius}
+            fill="none"
+            strokeWidth={strokeWidth}
+          />
+          <circle
+            className="bento-performance-ring-fill"
+            cx="18"
+            cy="18"
+            r={radius}
+            fill="none"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={offset}
+            strokeLinecap="round"
+            transform="rotate(-90 18 18)"
+          />
+        </svg>
+        <span className="bento-performance-value">{value}%</span>
+      </div>
+      <span className="bento-performance-label">{label}</span>
+    </div>
+  )
+}
 
 function BentoSection() {
   return (
     <section className="bento-section" aria-label="Highlights">
       <div className="bento-inner">
-        <div className="bento-grid">
-          <article className="bento-card bento-hero">
-            <div className="bento-hero-content">
-              <p className="bento-hero-name">Haider Ghauri</p>
-              <p className="bento-hero-role">
-                UI/UX Design &amp; Framer Development
-              </p>
-              <span className="bento-hero-badge">FRAMER EXPERT</span>
-              <a className="bento-hero-cta" href="#contact">
-                Contact Me
-              </a>
-            </div>
-            <img
-              className="bento-hero-photo"
-              src={profilePhoto}
-              alt="Haider Ghauri"
-            />
-          </article>
-
-          <article className="bento-card bento-steps bento-stack">
-            <span className="bento-feature-tag">My Stack</span>
-            <div className="bento-stack-rows">
-              {BENTO_STACK_TOOLS.map((row) => (
-                <div className="bento-stack-row" key={row.join('-')}>
-                  {row.map((tool) => (
-                    <span className="bento-stack-tool" key={tool}>
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
-            <div className="bento-steps-deco" aria-hidden="true" />
-          </article>
-
-          <article className="bento-card bento-stats">
-            <div className="bento-framer-logo" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <path d="M4 28L16 4L28 28H20L16 18L12 28H4Z" fill="currentColor" />
-              </svg>
-            </div>
-            <p className="bento-stats-count">20+ Projects Complete</p>
-            <ul className="bento-stats-list">
-              {BENTO_STATS.map(({ label, icon }) => (
-                <li key={label}>
-                  <span className={`bento-stat-icon bento-stat-icon--${icon}`}>
-                    {icon === 'clock' && (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-                        <path d="M12 7V12L15 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                      </svg>
-                    )}
-                    {icon === 'star' && (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 4L14.5 9.5L20.5 10.2L16 14.2L17.2 20.2L12 17.2L6.8 20.2L8 14.2L3.5 10.2L9.5 9.5L12 4Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-                      </svg>
-                    )}
-                    {icon === 'heart' && (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 20.5C12 20.5 4 15 4 9.5C4 7 6 5 8.5 5C10.2 5 12 6.2 12 6.2C12 6.2 13.8 5 15.5 5C18 5 20 7 20 9.5C20 15 12 20.5 12 20.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-                      </svg>
-                    )}
-                  </span>
-                  {label}
-                </li>
-              ))}
-            </ul>
-          </article>
-
-          <article className="bento-card bento-feature bento-feature--support">
-            <div className="bento-feature-visual">
-              <img src={bentoOne} alt="" loading="lazy" />
-            </div>
-            <div className="bento-feature-copy">
-              <span className="bento-feature-tag">Design Philosophy</span>
-              <blockquote className="bento-feature-quote">
-                &ldquo;I design products that feel obvious in hindsight.&rdquo;
-              </blockquote>
-              <p className="bento-feature-text">
-                5+ years turning complex problems into interfaces people actually
-                enjoy using.
+        <div className="bento-shell">
+          <div className="bento-grid bento-grid--showcase">
+          <article className="bento-card bento-csat">
+            <div className="bento-csat-top">
+              <p className="bento-csat-label">CSAT</p>
+              <p className="bento-csat-text">
+                Measures and improves client satisfaction.
               </p>
             </div>
-          </article>
-
-          <article className="bento-card bento-feature bento-feature--clients">
-            <div className="bento-feature-visual bento-feature-visual--dark">
-              <img src={bentoTwo} alt="" loading="lazy" />
-            </div>
-            <div className="bento-feature-copy bento-feature-copy--light">
-              <span className="bento-feature-tag bento-feature-tag--light">Core Skills</span>
-              <div className="bento-skill-pills" aria-label="Core skills">
-                {BENTO_SKILL_PILLS.map((skill) => (
-                  <span className="bento-skill-pill" key={skill}>
-                    {skill}
-                  </span>
+            <div className="bento-csat-bottom">
+              <p className="bento-csat-rating">EXCELLENT</p>
+              <div className="bento-csat-faces" aria-hidden="true">
+                {BENTO_CSAT_MOODS.map((mood, index) => (
+                  <BentoCsatFace
+                    key={mood}
+                    mood={mood}
+                    active={index === BENTO_CSAT_MOODS.length - 1}
+                  />
                 ))}
               </div>
             </div>
           </article>
 
-          <BentoDailyCaseStudy />
+          <article className="bento-card bento-strategy">
+            <div className="bento-strategy-visual">
+              <img className="bento-zoom-image" src={strategyWorkspace} alt="" loading="lazy" />
+            </div>
+            <div className="bento-strategy-copy">
+              <div className="bento-strategy-header">
+                <span className="bento-strategy-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M6 20h12M9 20v-3.5c0-1.8 1.2-3.2 2.8-4-1.6-1.2-2.3-3.1-1.8-5.1.4-1.6 1.6-2.9 3.2-3.4 1.2-.4 2.5-.1 3.5.7 1.4 1.1 2.1 2.8 1.9 4.6-.2 1.4-1 2.6-2.2 3.4 1.4.8 2.2 2.2 2.2 3.8V20"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                <div className="bento-strategy-nav" aria-hidden="true">
+                  <span className="bento-strategy-nav-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M15 18L9 12L15 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <span className="bento-strategy-nav-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M9 18L15 12L9 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div className="bento-strategy-body">
+                <h3 className="bento-strategy-title">Strategy that matters</h3>
+                <p className="bento-strategy-text">
+                  Thoughtful direction aligned with real business goals.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article className="bento-card bento-project-cta">
+            <div className="bento-project-cta-content">
+              <h3 className="bento-project-cta-title">Discuss your project</h3>
+              <a className="bento-project-cta-btn" href="#contact">
+                Schedule a call - 15 mins free
+              </a>
+              <p className="bento-project-cta-note">No pressure, just a thoughtful chat.</p>
+            </div>
+            <div className="bento-project-cta-avatars" aria-hidden="true">
+              <img className="bento-project-cta-avatar" src={ctaAvatarOne} alt="" />
+              <img className="bento-project-cta-avatar" src={ctaAvatarTwo} alt="" />
+              <img className="bento-project-cta-avatar" src={ctaAvatarThree} alt="" />
+              <img className="bento-project-cta-avatar" src={ctaAvatarFour} alt="" />
+            </div>
+          </article>
+
+          <article className="bento-card bento-performance">
+            <div className="bento-performance-copy">
+              <h3 className="bento-performance-title">SEO ready &amp; fast performance</h3>
+              <p className="bento-performance-text">
+                Optimized for search rankings and blazing-fast speed.
+              </p>
+            </div>
+            <div className="bento-performance-rings">
+              {BENTO_PERFORMANCE_SCORES.map((score, index) => (
+                <BentoPerformanceRing
+                  key={score.label}
+                  value={score.value}
+                  label={score.label}
+                  featured={index === 1}
+                />
+              ))}
+            </div>
+          </article>
+
+          <article className="bento-card bento-spotlight">
+            <Link
+              className="bento-spotlight-link"
+              to={caseStudyPath(getFeaturedCaseStudy().id)}
+              state={NAV_FORWARD}
+            >
+              <h3 className="bento-spotlight-title">
+                Agency
+                <br />
+                website rebuild
+              </h3>
+              <p className="bento-spotlight-stat">120% more inquiries</p>
+              <div className="bento-spotlight-visual">
+                <img
+                  className="bento-spotlight-image"
+                  src={spotlightDevice}
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+            </Link>
+          </article>
+
+          <BentoIndustriesCard />
+
+          <article className="bento-card bento-profile">
+            <img
+              className="bento-profile-photo bento-zoom-image"
+              src={profilePhoto}
+              alt="Haider Ghauri"
+            />
+            <div className="bento-profile-footer">
+              <p className="bento-profile-name">Haider Ghauri</p>
+              <p className="bento-profile-role">UI/UX Design &amp; Framer Development</p>
+            </div>
+          </article>
+          </div>
         </div>
       </div>
     </section>
@@ -1131,18 +1243,12 @@ function HomePage() {
         <ScrollReveal>
           <CaseStudiesSection />
         </ScrollReveal>
-        <ScrollReveal>
-          <HowIWorkSection />
-        </ScrollReveal>
-        <ScrollReveal>
-          <FaqSection />
-        </ScrollReveal>
-        <ScrollReveal>
-          <CtaSection />
-        </ScrollReveal>
-        <ScrollReveal>
-          <SiteChrome.Footer />
-        </ScrollReveal>
+        <HowIWorkSection />
+        <FaqSection />
+        <div className="landing-bottom">
+            <CtaSection />
+            <SiteChrome.Footer />
+          </div>
       </main>
     </>
   )

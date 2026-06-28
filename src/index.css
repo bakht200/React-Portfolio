@@ -14,6 +14,14 @@
   --brand-secondary-hover: #4f46e5;
   --brand-secondary-light: rgba(99, 102, 241, 0.12);
   --brand-secondary-muted: #a5b4fc;
+  --brand-accent: var(--brand-secondary);
+  --brand-accent-hover: var(--brand-secondary-hover);
+  --brand-accent-soft: #e0e7ff;
+  --brand-accent-softer: #eef2ff;
+  --brand-accent-pale: #c7d2fe;
+  --brand-accent-warm-pale: #ddd6fe;
+  --brand-accent-shadow: rgba(99, 102, 241, 0.28);
+  --brand-accent-shadow-strong: rgba(99, 102, 241, 0.36);
   --brand-shadow: rgba(30, 41, 59, 0.08);
   --brand-shadow-accent: rgba(99, 102, 241, 0.22);
 
@@ -31,18 +39,20 @@
     rgba(30, 41, 59, 0.08) 0 10px 15px -3px,
     rgba(30, 41, 59, 0.04) 0 4px 6px -2px;
 
-  --content-max-width: 1200px;
-  --topbar-max-width: 900px;
+  --content-max-width: 1040px;
+  --topbar-max-width: 780px;
+  --bento-max-width: 760px;
+  --faq-max-width: 720px;
   --layout-max-width: var(--content-max-width);
   --layout-max-width-narrow: var(--content-max-width);
   --projects-max-width: var(--content-max-width);
   --layout-padding-x: 16px;
   --layout-padding-x-mobile: 12px;
 
-  --landing-section-gap: 56px;
-  --landing-section-gap-mobile: 40px;
-  --landing-topbar-gap: 20px;
-  --landing-topbar-gap-mobile: 16px;
+  --landing-section-gap: 48px;
+  --landing-section-gap-mobile: 36px;
+  --landing-topbar-gap: 18px;
+  --landing-topbar-gap-mobile: 14px;
   --landing-content-gap: calc(var(--landing-section-gap) / 2);
   --landing-content-gap-mobile: calc(var(--landing-section-gap-mobile) / 2);
 
@@ -50,7 +60,19 @@
   --heading: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
+  /* Typography scale */
+  --fs-display: clamp(28px, 3.6vw, 42px);
+  --fs-heading: clamp(28px, 3.5vw, 42px);
+  --fs-heading-lg: clamp(28px, 3.8vw, 44px);
+  --fs-subheading: clamp(24px, 3vw, 36px);
+  --fs-card: clamp(22px, 2.4vw, 30px);
+  --fs-body: 15px;
+  --fs-body-sm: 14px;
+  --fs-small: 13px;
+  --fs-caption: 12px;
+  --fs-micro: 11px;
+
+  font: 16px/145% var(--sans);
   letter-spacing: 0.01em;
   color-scheme: light;
   color: var(--text);
@@ -61,7 +83,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   @media (max-width: 1024px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 
@@ -99,22 +121,22 @@ h3 {
 }
 
 h1 {
-  font-size: 56px;
+  font-size: 48px;
   letter-spacing: -0.03em;
-  margin: 32px 0;
+  margin: 28px 0;
   @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+    font-size: 32px;
+    margin: 18px 0;
   }
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1.18;
   letter-spacing: -0.02em;
   margin: 0 0 8px;
   @media (max-width: 1024px) {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
@@ -131,7 +153,7 @@ code,
 }
 
 code {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
