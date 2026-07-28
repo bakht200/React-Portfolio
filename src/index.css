@@ -3,7 +3,7 @@
   --brand-primary: #1e293b;
   --brand-secondary: #6366f1;
   --brand-tertiary: #0f172a;
-  --brand-neutral: #f8fafc;
+  --brand-neutral: #f7f7f5;
   --brand-white: #ffffff;
   --brand-border: #e2e8f0;
   --brand-border-hover: #cbd5e1;
@@ -34,7 +34,7 @@
   --accent: var(--brand-secondary);
   --accent-bg: var(--brand-secondary-light);
   --accent-border: rgba(99, 102, 241, 0.45);
-  --social-bg: rgba(248, 250, 252, 0.8);
+  --social-bg: rgba(247, 247, 245, 0.8);
   --shadow:
     rgba(30, 41, 59, 0.08) 0 10px 15px -3px,
     rgba(30, 41, 59, 0.04) 0 4px 6px -2px;
@@ -53,6 +53,9 @@
   --landing-section-gap-mobile: 36px;
   --landing-topbar-gap: 18px;
   --landing-topbar-gap-mobile: 14px;
+  /* sticky topbar block: padding-top + nav pill + gap below */
+  --topbar-block-size: calc(20px + 60px + var(--landing-topbar-gap));
+  --topbar-block-size-mobile: calc(16px + 56px + var(--landing-topbar-gap-mobile));
   --landing-content-gap: calc(var(--landing-section-gap) / 2);
   --landing-content-gap-mobile: calc(var(--landing-section-gap-mobile) / 2);
 

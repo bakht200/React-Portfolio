@@ -6,9 +6,9 @@ import CaseStudiesSection from './CaseStudiesSection'
 import ProjectsSection from './ProjectsSection'
 import RouteTransition from './RouteTransition'
 import SiteChrome, { NavAnchor } from './SiteChrome'
-import { aboutPath } from './about'
 import { NAV_FORWARD } from './pageTransition'
 import { scrollToSection } from './pageTransition'
+import FloatingCards from './FloatingCards'
 import profilePhoto from './assets/recommend-optimized.png'
 import strategyWorkspace from './assets/strategy-workspace.jpg'
 import spotlightDevice from './assets/spotlight-device.jpg'
@@ -134,143 +134,48 @@ function RevealItem({ children, delay = 0, className = '' }) {
 function HeroSection() {
   return (
     <section className="hero-section" id="home">
-      <div className="hero-grid">
-        <article className="profile-card">
-          <div className="card-inner">
-            <img
-              className="profile-photo"
-              src={profilePhoto}
-              alt="Haider Ghauri"
-              width={320}
-              height={380}
-            />
-            <div className="profile-footer">
-              <div className="profile-info">
-                <h2 className="profile-name">Haider Ghauri</h2>
-                <p className="profile-role">Senior Product Designer</p>
-              </div>
-              <Link
-                className="profile-message-btn"
-                to={aboutPath()}
-                state={NAV_FORWARD}
-                aria-label="About me"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M22 2L11 13"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M22 2L15 22L11 13L2 9L22 2Z"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </Link>
-            </div>
-          </div>
-        </article>
+      <div className="hero-center">
+        <a className="hero-badge" href="#contact">
+          <span className="hero-badge-dot" aria-hidden="true" />
+          <span>Open to Remote Work</span>
+        </a>
 
-        <article className="intro-card">
-          <div className="card-inner">
-            <div className="intro-body">
-              <a className="slots-badge" href="#contact">
-                <span className="slots-status" aria-hidden="true">
-                  <span className="slots-dot" />
-                </span>
-                <span className="slots-text">Open to Remote Work</span>
-                <span className="slots-arrow-btn" aria-hidden="true">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M5 12H19M19 12L12 5M19 12L12 19"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-              </a>
+        <h1 className="hero-heading">
+          <span className="hero-heading-line">Hi, I&apos;m Haider Ghauri</span>
+          <span className="hero-heading-line">
+            I <span className="hero-heading-accent">Design Products</span>
+          </span>
+          <span className="hero-heading-line">People Love to Use.</span>
+        </h1>
 
-            <h1 className="intro-heading">
-              <span className="intro-line">
-                Hi, I&apos;m{' '}
-                {' '}
-                Haider Ghauri
-              </span>
-              <span className="intro-line">
-                I{' '}
-                <span className="intro-accent">Design Products</span>
-              </span>
-              <span className="intro-line">People Love to Use.</span>
-            </h1>
+        <p className="hero-subheading">
+          I&apos;m a Senior Product Designer with 5+ years of experience
+          building AI platforms, healthcare tools, fintech apps, and
+          enterprise SaaS from first wireframe to final handoff.
+          Available for full-time remote roles and freelance projects
+          across the US, EU, and worldwide.
+        </p>
 
-            <p className="intro-description">
-            I'm a Senior Product Designer with 5+ years of experience 
-building AI platforms, healthcare tools, fintech apps, and 
-enterprise SaaS from first wireframe to final handoff.
-Available for full-time remote roles and freelance projects 
-across the US, EU, and worldwide.
-            </p>
-          </div>
-
-          <div className="intro-actions">
-            <a className="intro-btn intro-btn-primary" href="#contact">
-              <span>Let&apos;s Connect</span>
-              <span className="intro-btn-icon" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </a>
-            <a className="intro-btn intro-btn-outline" href="#projects">
-              <span>Explore My Work</span>
-              <span className="intro-btn-icon intro-btn-icon-outline" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M3 13h18"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </a>
-          </div>
-          </div>
-        </article>
+        <div className="hero-actions">
+          <a className="hero-btn hero-btn--primary" href="#contact">
+            Let&apos;s Connect
+          </a>
+          <a className="hero-btn hero-btn--secondary" href="#projects">
+            Explore My Work
+          </a>
+        </div>
       </div>
     </section>
+  )
+}
+
+/** Orbits frame intro + trusted, from topbar down to bento */
+function HeroOrbitZone({ children }) {
+  return (
+    <div className="hero-orbit-zone">
+      <FloatingCards />
+      <div className="hero-orbit-zone-content">{children}</div>
+    </div>
   )
 }
 
@@ -1226,10 +1131,10 @@ function HomePage() {
       <SiteChrome />
       <main className="landing-main">
         <ScrollReveal>
-          <HeroSection />
-        </ScrollReveal>
-        <ScrollReveal>
-          <TrustedSection />
+          <HeroOrbitZone>
+            <HeroSection />
+            <TrustedSection />
+          </HeroOrbitZone>
         </ScrollReveal>
         <ScrollReveal>
           <BentoSection />
