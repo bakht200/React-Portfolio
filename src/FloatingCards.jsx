@@ -3,25 +3,28 @@
 import PremiumArcPainter from './PremiumArcPainter'
 import { getSideAngles, pointOnArc } from './orbitGeometry'
 
+// Prefix with BASE_URL so icons resolve under GitHub Pages (/React-Portfolio/)
+const asset = (path) => `${import.meta.env.BASE_URL}${path}`
+
 const ICONS = {
-  figma: '/orbit-icons/figma.png',
-  framer: '/orbit-icons/framer.png',
-  notion: '/orbit-icons/notion.png',
-  paintBoard: '/orbit-icons/paint-board.png',
-  penTool: '/orbit-icons/pen-tool.png',
-  dashboard: '/orbit-icons/dashboard.png',
-  idea: '/orbit-icons/idea.png',
-  photoshop: '/orbit-icons/photoshop.png',
-  aiWeb: '/orbit-icons/ai-web.png',
-  chatgpt: '/orbit-icons/chatgpt.png',
-  claude: '/orbit-icons/claude.png',
-  css: '/orbit-icons/css.png',
-  tailwind: '/orbit-icons/tailwind.png',
-  behance: '/orbit-icons/behance.png',
-  dribbble: '/orbit-icons/dribbble.png',
-  pinterest: '/orbit-icons/pinterest.png',
-  smartphone: '/orbit-icons/smartphone.png',
-  aiAudio: '/orbit-icons/ai-audio.png',
+  figma: asset('orbit-icons/figma.png'),
+  framer: asset('orbit-icons/framer.png'),
+  notion: asset('orbit-icons/notion.png'),
+  paintBoard: asset('orbit-icons/paint-board.png'),
+  penTool: asset('orbit-icons/pen-tool.png'),
+  dashboard: asset('orbit-icons/dashboard.png'),
+  idea: asset('orbit-icons/idea.png'),
+  photoshop: asset('orbit-icons/photoshop.png'),
+  aiWeb: asset('orbit-icons/ai-web.png'),
+  chatgpt: asset('orbit-icons/chatgpt.png'),
+  claude: asset('orbit-icons/claude.png'),
+  css: asset('orbit-icons/css.png'),
+  tailwind: asset('orbit-icons/tailwind.png'),
+  behance: asset('orbit-icons/behance.png'),
+  dribbble: asset('orbit-icons/dribbble.png'),
+  pinterest: asset('orbit-icons/pinterest.png'),
+  smartphone: asset('orbit-icons/smartphone.png'),
+  aiAudio: asset('orbit-icons/ai-audio.png'),
 }
 
 /**
