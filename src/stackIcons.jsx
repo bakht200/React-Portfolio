@@ -93,7 +93,7 @@ export function StackToolIcon({ id }) {
         <circle cx="9.2" cy="11" r="2.1" fill="#fff" />
         <path
           d="M3 15.2 7.8 10.4l3.2 3.1 4.1-3.8L21 14.8V17c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-1.8Z"
-          fill="#6366F1"
+          fill="#FF6321"
         />
       </svg>
     )

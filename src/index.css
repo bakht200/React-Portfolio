@@ -1,43 +1,66 @@
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist/Geist-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist/Geist-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
-  /* Brand colors */
-  --brand-primary: #1e293b;
-  --brand-secondary: #6366f1;
-  --brand-tertiary: #0f172a;
-  --brand-neutral: #f7f7f5;
+  /* Brand colors — Orange primary scale */
+  --orange-50: #fff5ed;
+  --orange-100: #ffe8d4;
+  --orange-200: #ffcda8;
+  --orange-300: #ffa970;
+  --orange-400: #ff7b37;
+  --orange-500: #ff6321;
+
+  --brand-primary: var(--orange-500);
+  --brand-secondary: var(--orange-500);
+  --brand-tertiary: #060612;
+  --brand-neutral: #f4f4f3;
   --brand-white: #ffffff;
-  --brand-border: #e2e8f0;
-  --brand-border-hover: #cbd5e1;
-  --brand-text: #475569;
-  --brand-text-muted: #94a3b8;
-  --brand-text-heading: #0f172a;
-  --brand-primary-hover: #334155;
-  --brand-secondary-hover: #4f46e5;
-  --brand-secondary-light: rgba(99, 102, 241, 0.12);
-  --brand-secondary-muted: #a5b4fc;
-  --brand-accent: var(--brand-secondary);
-  --brand-accent-hover: var(--brand-secondary-hover);
-  --brand-accent-soft: #e0e7ff;
-  --brand-accent-softer: #eef2ff;
-  --brand-accent-pale: #c7d2fe;
-  --brand-accent-warm-pale: #ddd6fe;
-  --brand-accent-shadow: rgba(99, 102, 241, 0.28);
-  --brand-accent-shadow-strong: rgba(99, 102, 241, 0.36);
-  --brand-shadow: rgba(30, 41, 59, 0.08);
-  --brand-shadow-accent: rgba(99, 102, 241, 0.22);
+  --brand-border: #e4e4e2;
+  --brand-border-hover: #d0d0cd;
+  --brand-text: #3a3a45;
+  --brand-text-muted: #8a8a93;
+  --brand-text-heading: #060612;
+  --brand-primary-hover: #e5551a;
+  --brand-secondary-hover: #e5551a;
+  --brand-secondary-light: rgba(255, 99, 33, 0.12);
+  --brand-secondary-muted: var(--orange-300);
+  --brand-accent: var(--orange-500);
+  --brand-accent-hover: var(--brand-primary-hover);
+  --brand-accent-soft: var(--orange-100);
+  --brand-accent-softer: var(--orange-50);
+  --brand-accent-pale: var(--orange-200);
+  --brand-accent-warm-pale: var(--orange-100);
+  --brand-accent-shadow: rgba(255, 99, 33, 0.28);
+  --brand-accent-shadow-strong: rgba(255, 99, 33, 0.36);
+  --brand-shadow: rgba(6, 6, 18, 0.08);
+  --brand-shadow-accent: rgba(255, 99, 33, 0.22);
 
   /* Legacy aliases */
   --text: var(--brand-text);
   --text-h: var(--brand-text-heading);
   --bg: var(--brand-neutral);
   --border: var(--brand-border);
-  --code-bg: #f1f5f9;
-  --accent: var(--brand-secondary);
+  --code-bg: #ebebea;
+  --accent: var(--brand-primary);
   --accent-bg: var(--brand-secondary-light);
-  --accent-border: rgba(99, 102, 241, 0.45);
-  --social-bg: rgba(247, 247, 245, 0.8);
+  --accent-border: rgba(255, 99, 33, 0.45);
+  --social-bg: rgba(244, 244, 243, 0.8);
   --shadow:
-    rgba(30, 41, 59, 0.08) 0 10px 15px -3px,
-    rgba(30, 41, 59, 0.04) 0 4px 6px -2px;
+    rgba(6, 6, 18, 0.08) 0 10px 15px -3px,
+    rgba(6, 6, 18, 0.04) 0 4px 6px -2px;
 
   --content-max-width: 1040px;
   --topbar-max-width: 780px;
@@ -59,8 +82,8 @@
   --landing-content-gap: calc(var(--landing-section-gap) / 2);
   --landing-content-gap-mobile: calc(var(--landing-section-gap-mobile) / 2);
 
-  --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: 'Geist', system-ui, 'Segoe UI', sans-serif;
+  --heading: 'Geist', system-ui, 'Segoe UI', sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   /* Typography scale */

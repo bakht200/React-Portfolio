@@ -295,7 +295,7 @@
   overflow: hidden;
   min-height: 100vh;
   padding-top: var(--topbar-block-size);
-  background: #f7f7f5;
+  background: var(--brand-neutral);
 }
 
 .hero-orbit-zone-content {
@@ -638,7 +638,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #ff6a2a;
+  background: var(--brand-primary);
   box-shadow: 0 0 0 3px rgba(255, 106, 42, 0.15);
 }
 
@@ -658,7 +658,7 @@
 }
 
 .hero-heading-accent {
-  color: #ff6a2a;
+  color: var(--brand-primary);
 }
 
 .hero-subheading {
@@ -771,6 +771,47 @@
   shape-rendering: geometricPrecision;
 }
 
+/* CSS orbit — SMIL animateTransform is unreliable under React */
+.satellite-orbit {
+  transform-box: view-box;
+  transform-origin: var(--orbit-cx) var(--orbit-cy);
+  animation: satelliteOrbit var(--orbit-duration, 55s) linear infinite;
+  will-change: transform;
+}
+
+.satellite-orbit--reverse {
+  animation-direction: reverse;
+}
+
+.satellite-counter {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: satelliteOrbitCounter var(--orbit-duration, 55s) linear infinite;
+  will-change: transform;
+}
+
+.satellite-orbit--reverse .satellite-counter {
+  animation-name: satelliteOrbit;
+}
+
+@keyframes satelliteOrbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes satelliteOrbitCounter {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
 .satellite-foreign {
   overflow: visible;
 }
@@ -781,26 +822,38 @@
   justify-content: center;
   width: 52px;
   height: 52px;
-  border-radius: 15px;
-  border: 1px solid #e8e8e8;
-  background: #ffffff;
+  border-radius: 14px;
+  border: none;
+  background: #000000;
+  overflow: hidden;
   box-shadow:
-    0 8px 22px rgba(0, 0, 0, 0.055),
-    0 2px 5px rgba(0, 0, 0, 0.03);
-  color: #1a1a1a;
+    0 8px 22px rgba(0, 0, 0, 0.12),
+    0 2px 5px rgba(0, 0, 0, 0.06);
   box-sizing: border-box;
   animation: satelliteFloat 4.5s ease-in-out infinite;
   will-change: transform;
+  /* Prevent any inherited brand tint from affecting the asset */
+  color: #ffffff;
+  filter: none;
 }
 
 .floating-card-icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
-.floating-card-icon svg {
+.floating-card-icon img {
   display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  /* Keep PNGs true black/white — no hue/brand colorization */
+  filter: none;
+  -webkit-filter: none;
 }
 
 @keyframes satelliteFloat {
@@ -814,6 +867,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .satellite-orbit,
+  .satellite-counter,
   .floating-planet-face {
     animation: none;
   }
@@ -823,7 +878,11 @@
   .floating-planet-face {
     width: 46px;
     height: 46px;
-    border-radius: 13px;
+    border-radius: 12px;
+  }
+
+  .floating-card-icon img {
+    border-radius: 12px;
   }
 
   .hero-heading {
@@ -1058,7 +1117,7 @@
 
 @media (prefers-color-scheme: dark) {
   .hero-orbit-zone {
-    background: #f7f7f5;
+    background: var(--brand-neutral);
   }
 
   .hero-section {
@@ -1072,7 +1131,7 @@
   }
 
   .floating-planet-face {
-    background: rgba(255, 255, 255, 0.96);
+    background: transparent;
   }
 
   .card-inner {
@@ -1582,7 +1641,7 @@
   height: 46px;
   margin: 0 auto 10px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #ff8a54 0%, var(--brand-primary) 100%);
   box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
   flex-shrink: 0;
 }
@@ -1623,7 +1682,7 @@
   padding: 11px 20px;
   border: none;
   border-radius: 999px;
-  background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #ff8a54 0%, var(--brand-primary) 100%);
   color: var(--brand-white);
   font-family: inherit;
   font-size: var(--fs-small);
@@ -1638,7 +1697,7 @@
 
 .projects-showcase-cta-btn:hover,
 .projects-showcase-cta-btn:focus-visible {
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-hover) 100%);
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(99, 102, 241, 0.42);
 }
@@ -3120,7 +3179,7 @@
 }
 
 .faq-footer-avatar--1 {
-  background: linear-gradient(135deg, #93c5fd, #6366f1);
+  background: linear-gradient(135deg, #ffb089, var(--brand-primary));
 }
 
 .faq-footer-avatar--2 {
@@ -3570,7 +3629,12 @@
   overflow: hidden;
   border-radius: 24px;
   padding: var(--fs-heading);
-  background: linear-gradient(135deg, #a5b4fc 0%, var(--brand-accent) 45%, var(--brand-accent-pale) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--orange-100) 0%,
+    var(--orange-300) 38%,
+    var(--orange-500) 100%
+  );
   box-sizing: border-box;
 }
 
@@ -3630,7 +3694,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.65);
+  color: rgba(6, 6, 18, 0.65);
 }
 
 .cta-banner-heading {
@@ -3662,7 +3726,7 @@
 
 .cta-banner-btn:hover,
 .cta-banner-btn:focus-visible {
-  background: #1e293b;
+  background: var(--brand-tertiary);
   transform: translateY(-1px);
 }
 

@@ -885,8 +885,8 @@ function CtaSection() {
 const BENTO_CSAT_MOODS = ['sad', 'neutral', 'okay', 'good', 'excellent']
 
 function BentoCsatFace({ mood, active = false }) {
-  const fill = active ? '#6366f1' : '#ddd6fe'
-  const stroke = active ? '#0f172a' : '#818cf8'
+  const fill = active ? '#FF6321' : '#FFDCCB'
+  const stroke = active ? '#060612' : '#FF8A54'
 
   const mouths = {
     sad: 'M11 21c1.4-1.6 3.2-2.4 5-2.4s3.6.8 5 2.4',
