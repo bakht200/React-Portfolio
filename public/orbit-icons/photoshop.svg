@@ -1,0 +1,18 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_i_331_30117)">
+<path d="M2.5 12C2.5 7.522 2.5 5.282 3.891 3.891C5.282 2.5 7.521 2.5 12 2.5C16.478 2.5 18.718 2.5 20.109 3.891C21.5 5.282 21.5 7.521 21.5 12C21.5 16.478 21.5 18.718 20.109 20.109C18.718 21.5 16.479 21.5 12 21.5C7.522 21.5 5.282 21.5 3.891 20.109C2.5 18.718 2.5 16.479 2.5 12Z" stroke="#D4D4D4" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M6.5 16V12M6.5 12V9.125C6.5 9.009 6.5 8.951 6.505 8.902C6.52771 8.67182 6.62951 8.45662 6.79306 8.29306C6.95662 8.12951 7.17181 8.02771 7.402 8.005C7.451 8 7.509 8 7.625 8H9C9.53043 8 10.0391 8.21071 10.4142 8.58579C10.7893 8.96086 11 9.46957 11 10C11 10.5304 10.7893 11.0391 10.4142 11.4142C10.0391 11.7893 9.53043 12 9 12H6.5Z" stroke="#D4D4D4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.466 11.223C17.292 10.527 16.478 10 15.5 10C14.395 10 13.5 10.672 13.5 11.5C13.5 12.328 14.395 13 15.5 13C16.605 13 17.5 13.672 17.5 14.5C17.5 15.328 16.605 16 15.5 16C14.518 16 13.702 15.47 13.532 14.77" stroke="#D4D4D4" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+<defs>
+<filter id="filter0_i_331_30117" x="0" y="0" width="24" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="0.5"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_331_30117"/>
+</filter>
+</defs>
+</svg>
