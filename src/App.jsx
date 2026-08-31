@@ -248,15 +248,30 @@ const CLIENT_LOGOS = [
   },
 ]
 
+function TrustedLogoIcon({ logo }) {
+  if (logo.image) {
+    return (
+      <img
+        className="trusted-logo-img"
+        src={resolveContentAsset(logo.image)}
+        alt=""
+        width={28}
+        height={28}
+      />
+    )
+  }
+  return CLIENT_LOGOS.find((c) => c.id === logo.id)?.icon ?? null
+}
+
 function TrustedSection() {
   const { content } = useContent()
-  const clientLogos = content.trusted.logos
+  const clientLogos = content.trusted?.logos ?? []
   const logos = [...clientLogos, ...clientLogos]
 
   return (
     <section className="trusted-section" aria-label="Clients and partners">
       <div className="trusted-inner">
-        <p className="trusted-label">{content.trusted.label}</p>
+        <p className="trusted-label">{content.trusted?.label}</p>
         <div className="trusted-marquee">
           <div className="trusted-track">
             {logos.map((logo, index) => (
@@ -265,7 +280,7 @@ function TrustedSection() {
                 key={`${logo.id}-${index}`}
                 aria-hidden={index >= clientLogos.length}
               >
-                {CLIENT_LOGOS.find((c) => c.id === logo.id)?.icon ?? null}
+                <TrustedLogoIcon logo={logo} />
                 <span>{logo.label}</span>
               </div>
             ))}
@@ -448,22 +463,41 @@ function ExpertiseIcon({ type }) {
   )
 }
 
+function ExpertiseToolIcon({ tool }) {
+  if (tool.image) {
+    return (
+      <img
+        className="services-tool-img"
+        src={resolveContentAsset(tool.image)}
+        alt=""
+        width={18}
+        height={18}
+      />
+    )
+  }
+  return SERVICE_TOOLS.find((t) => t.id === tool.id)?.icon ?? null
+}
+
 function ExpertiseSection() {
-  const serviceTools = [...SERVICE_TOOLS, ...SERVICE_TOOLS]
+  const { content } = useContent()
+  const expertise = content.expertise ?? {}
+  const items = expertise.items?.length ? expertise.items : EXPERTISE_ITEMS
+  const tools = expertise.tools?.length ? expertise.tools : SERVICE_TOOLS.map((t) => ({ id: t.id, label: t.label, image: '' }))
+  const serviceTools = [...tools, ...tools]
 
   return (
     <section className="services-section" id="expertise">
       <div className="services-inner">
         <div className="services-top">
           <div className="services-left">
-            <span className="services-badge">My Expertise</span>
-            <h2 className="services-heading">What I bring to a team.</h2>
+            <span className="services-badge">{expertise.badge || 'My Expertise'}</span>
+            <h2 className="services-heading">{expertise.heading || 'What I bring to a team.'}</h2>
             <p className="services-description">
-              I work across the full product lifecycle — from understanding user
-              problems to shipping polished, developer-ready designs.
+              {expertise.description ||
+                'I work across the full product lifecycle — from understanding user problems to shipping polished, developer-ready designs.'}
             </p>
             <a className="book-call-btn services-cta" href="#contact">
-              <span>Get In Touch</span>
+              <span>{expertise.ctaText || 'Get In Touch'}</span>
               <span className="book-call-icon" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path
@@ -479,10 +513,18 @@ function ExpertiseSection() {
           </div>
 
           <div className="services-cards" aria-label="Areas of expertise">
-            {EXPERTISE_ITEMS.map((item) => (
+            {items.map((item) => (
               <article className="service-card" key={item.id}>
                 <div className="service-card-icon" aria-hidden="true">
-                  <ExpertiseIcon type={item.icon} />
+                  {item.image ? (
+                    <img
+                      className="service-card-img"
+                      src={resolveContentAsset(item.image)}
+                      alt=""
+                    />
+                  ) : (
+                    <ExpertiseIcon type={item.icon} />
+                  )}
                 </div>
                 <h3 className="service-card-title">{item.title}</h3>
                 <p className="service-card-description">{item.description}</p>
@@ -497,9 +539,9 @@ function ExpertiseSection() {
               <div
                 className="services-tool"
                 key={`${tool.id}-${index}`}
-                aria-hidden={index >= SERVICE_TOOLS.length}
+                aria-hidden={index >= tools.length}
               >
-                {tool.icon}
+                <ExpertiseToolIcon tool={tool} />
                 <span>{tool.label}</span>
               </div>
             ))}

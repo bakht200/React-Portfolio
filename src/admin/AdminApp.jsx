@@ -6,12 +6,14 @@ import {
   AdminDashboard,
   CaseStudiesEditor,
   CtaEditor,
+  ExpertiseEditor,
   FaqEditor,
   FooterEditor,
   HeroEditor,
   OrbitEditor,
   ProjectsEditor,
   ThemeEditor,
+  TrustedEditor,
 } from './AdminEditors'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -30,6 +32,8 @@ export default function AdminApp() {
         <Route index element={<AdminDashboard />} />
         <Route path="theme" element={<ThemeEditor />} />
         <Route path="hero" element={<HeroEditor />} />
+        <Route path="trusted" element={<TrustedEditor />} />
+        <Route path="expertise" element={<ExpertiseEditor />} />
         <Route path="projects" element={<ProjectsEditor />} />
         <Route path="case-studies" element={<CaseStudiesEditor />} />
         <Route path="about" element={<AboutEditor />} />

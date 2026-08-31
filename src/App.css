@@ -1237,8 +1237,15 @@
   user-select: none;
 }
 
-.trusted-logo svg {
+.trusted-logo svg,
+.trusted-logo-img {
   flex-shrink: 0;
+  object-fit: contain;
+}
+
+.trusted-logo-img {
+  width: 28px;
+  height: 28px;
 }
 
 @keyframes trusted-scroll {
@@ -2546,8 +2553,21 @@
   user-select: none;
 }
 
-.services-tool svg {
+.services-tool svg,
+.services-tool-img {
   flex-shrink: 0;
+  object-fit: contain;
+}
+
+.services-tool-img {
+  width: 18px;
+  height: 18px;
+}
+
+.service-card-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 @keyframes services-tools-scroll {

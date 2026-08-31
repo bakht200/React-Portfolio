@@ -33,12 +33,70 @@ export const defaultContent = {
   trusted: {
     label: 'Proudly worked with:',
     logos: [
-      { id: 'healthcare', label: 'Healthcare & HIPAA' },
-      { id: 'ai-products', label: 'AI Products' },
-      { id: 'hrms', label: 'HRMS & HCM' },
-      { id: 'fintech', label: 'Fintech' },
-      { id: 'ecommerce', label: 'E-Commerce' },
-      { id: 'inventory', label: 'Inventory & Ops' },
+      { id: 'healthcare', label: 'Healthcare & HIPAA', image: '' },
+      { id: 'ai-products', label: 'AI Products', image: '' },
+      { id: 'hrms', label: 'HRMS & HCM', image: '' },
+      { id: 'fintech', label: 'Fintech', image: '' },
+      { id: 'ecommerce', label: 'E-Commerce', image: '' },
+      { id: 'inventory', label: 'Inventory & Ops', image: '' },
+    ],
+  },
+
+  expertise: {
+    badge: 'My Expertise',
+    heading: 'What I bring to a team.',
+    description:
+      'I work across the full product lifecycle — from understanding user problems to shipping polished, developer-ready designs.',
+    ctaText: 'Get In Touch',
+    items: [
+      {
+        id: 'product-design',
+        title: 'Product Design',
+        description:
+          'End-to-end design from discovery and wireframes to high-fidelity UI and developer handoff.',
+        icon: 'product',
+        image: '',
+      },
+      {
+        id: 'design-systems',
+        title: 'Design Systems',
+        description:
+          'Scalable component libraries and design tokens that keep teams consistent and shipping faster.',
+        icon: 'systems',
+        image: '',
+      },
+      {
+        id: 'ai-product-design',
+        title: 'AI Product Design',
+        description:
+          'Designing intelligent interfaces — agentic flows, AI onboarding, and trust-first interaction patterns.',
+        icon: 'ai',
+        image: '',
+      },
+      {
+        id: 'ux-research',
+        title: 'UX Research',
+        description:
+          'User interviews, usability testing, and data synthesis that ground design decisions in reality.',
+        icon: 'research',
+        image: '',
+      },
+      {
+        id: 'collaboration',
+        title: 'Cross-functional Collaboration',
+        description:
+          'Clean Figma handoffs and close partnership with engineering, product, and business stakeholders.',
+        icon: 'collaboration',
+        image: '',
+      },
+    ],
+    tools: [
+      { id: 'photoshop', label: 'Photoshop', image: '' },
+      { id: 'illustrator', label: 'Illustrator', image: '' },
+      { id: 'xd', label: 'Xd', image: '' },
+      { id: 'figma', label: 'Figma', image: '' },
+      { id: 'framer', label: 'Framer', image: '' },
+      { id: 'rive', label: 'Rive', image: '' },
     ],
   },
 

@@ -275,6 +275,8 @@ export function AdminDashboard() {
           <ul className="admin-link-list">
             <li><Link to="/admin/theme">Theme & Colors</Link></li>
             <li><Link to="/admin/hero">Hero & Site info</Link></li>
+            <li><Link to="/admin/trusted">Proudly Worked With</Link></li>
+            <li><Link to="/admin/expertise">Expertise</Link></li>
             <li><Link to="/admin/projects">Projects</Link></li>
             <li><Link to="/admin/case-studies">Case Studies</Link></li>
             <li><Link to="/admin/about">About page</Link></li>
@@ -339,11 +341,11 @@ export function ThemeEditor() {
 
 export function HeroEditor() {
   const { content, updateSection } = useContent()
-  const { hero, site, trusted } = content
+  const { hero, site } = content
 
   return (
     <>
-      <SectionHeader title="Hero & Site" description="Name, hero copy, and trusted-by labels." />
+      <SectionHeader title="Hero & Site" description="Name, hero copy, and logo." />
       <div className="admin-form-grid">
         <Field label="Site title (browser tab)">
           <input value={site.title} onChange={(e) => updateSection('site', { ...site, title: e.target.value })} />
@@ -376,10 +378,239 @@ export function HeroEditor() {
         <Field label="Secondary CTA">
           <input value={hero.secondaryCta} onChange={(e) => updateSection('hero', { ...hero, secondaryCta: e.target.value })} />
         </Field>
-        <Field label="Trusted label">
-          <input value={trusted.label} onChange={(e) => updateSection('trusted', { ...trusted, label: e.target.value })} />
+      </div>
+    </>
+  )
+}
+
+export function TrustedEditor() {
+  const { content, updateSection } = useContent()
+  const raw = content.trusted ?? {}
+  const trusted = {
+    label: raw.label ?? 'Proudly worked with:',
+    logos: raw.logos ?? [],
+  }
+
+  const updateLogo = (index, patch) => {
+    const logos = trusted.logos.map((item, i) => (i === index ? { ...item, ...patch } : item))
+    updateSection('trusted', { ...trusted, logos })
+  }
+
+  const addLogo = () => {
+    updateSection('trusted', {
+      ...trusted,
+      logos: [
+        ...trusted.logos,
+        { id: `partner-${Date.now()}`, label: 'New partner', image: '' },
+      ],
+    })
+  }
+
+  return (
+    <>
+      <SectionHeader
+        title="Proudly Worked With"
+        description="Marquee of industries and partners — each item has a label and optional icon image."
+      />
+      <div className="admin-form-grid">
+        <Field label="Section label">
+          <input
+            value={trusted.label}
+            onChange={(e) => updateSection('trusted', { ...trusted, label: e.target.value })}
+          />
         </Field>
       </div>
+      <button type="button" className="admin-btn admin-btn--primary admin-btn--mb" onClick={addLogo}>
+        + Add item
+      </button>
+      {trusted.logos.map((logo, index) => (
+        <details key={logo.id} className="admin-accordion" open={index === 0}>
+          <summary>{logo.label || 'Untitled'}</summary>
+          <div className="admin-form-grid">
+            <Field label="Label (text)">
+              <input value={logo.label} onChange={(e) => updateLogo(index, { label: e.target.value })} />
+            </Field>
+            <ImageField
+              label="Icon image"
+              hint="Upload a logo or icon. Leave empty to use the default built-in icon."
+              value={logo.image}
+              folder="trusted"
+              onChange={(image) => updateLogo(index, { image })}
+            />
+            <button
+              type="button"
+              className="admin-btn admin-btn--danger"
+              onClick={() =>
+                updateSection('trusted', {
+                  ...trusted,
+                  logos: trusted.logos.filter((_, i) => i !== index),
+                })
+              }
+            >
+              Delete item
+            </button>
+          </div>
+        </details>
+      ))}
+    </>
+  )
+}
+
+const EXPERTISE_ICON_OPTIONS = [
+  { value: 'product', label: 'Product (grid)' },
+  { value: 'systems', label: 'Systems (orbit)' },
+  { value: 'ai', label: 'AI (star)' },
+  { value: 'research', label: 'Research (search)' },
+  { value: 'collaboration', label: 'Collaboration (nodes)' },
+]
+
+export function ExpertiseEditor() {
+  const { content, updateSection } = useContent()
+  const raw = content.expertise ?? {}
+  const expertise = {
+    badge: raw.badge ?? 'My Expertise',
+    heading: raw.heading ?? '',
+    description: raw.description ?? '',
+    ctaText: raw.ctaText ?? 'Get In Touch',
+    items: raw.items ?? [],
+    tools: raw.tools ?? [],
+  }
+
+  const setRoot = (patch) => updateSection('expertise', { ...expertise, ...patch })
+
+  const updateItem = (index, patch) => {
+    const items = expertise.items.map((item, i) => (i === index ? { ...item, ...patch } : item))
+    setRoot({ items })
+  }
+
+  const updateTool = (index, patch) => {
+    const tools = expertise.tools.map((tool, i) => (i === index ? { ...tool, ...patch } : tool))
+    setRoot({ tools })
+  }
+
+  return (
+    <>
+      <SectionHeader
+        title="Expertise"
+        description="My Expertise section — heading, skill cards, and tools marquee."
+      />
+      <div className="admin-form-grid">
+        <Field label="Badge">
+          <input value={expertise.badge} onChange={(e) => setRoot({ badge: e.target.value })} />
+        </Field>
+        <Field label="Heading">
+          <input value={expertise.heading} onChange={(e) => setRoot({ heading: e.target.value })} />
+        </Field>
+        <Field label="Description">
+          <textarea
+            rows={4}
+            value={expertise.description}
+            onChange={(e) => setRoot({ description: e.target.value })}
+          />
+        </Field>
+        <Field label="CTA button text">
+          <input value={expertise.ctaText} onChange={(e) => setRoot({ ctaText: e.target.value })} />
+        </Field>
+      </div>
+
+      <h3 className="admin-subtitle">Skill cards</h3>
+      <button
+        type="button"
+        className="admin-btn admin-btn--primary admin-btn--mb"
+        onClick={() =>
+          setRoot({
+            items: [
+              ...expertise.items,
+              {
+                id: `skill-${Date.now()}`,
+                title: 'New skill',
+                description: 'Description here.',
+                icon: 'product',
+                image: '',
+              },
+            ],
+          })
+        }
+      >
+        + Add skill card
+      </button>
+      {expertise.items.map((item, index) => (
+        <details key={item.id} className="admin-accordion">
+          <summary>{item.title}</summary>
+          <div className="admin-form-grid">
+            <Field label="Title">
+              <input value={item.title} onChange={(e) => updateItem(index, { title: e.target.value })} />
+            </Field>
+            <Field label="Description">
+              <textarea
+                rows={3}
+                value={item.description}
+                onChange={(e) => updateItem(index, { description: e.target.value })}
+              />
+            </Field>
+            <Field label="Built-in icon (if no custom image)">
+              <select value={item.icon} onChange={(e) => updateItem(index, { icon: e.target.value })}>
+                {EXPERTISE_ICON_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <ImageField
+              label="Custom card image"
+              hint="Optional — overrides the built-in icon on the card."
+              value={item.image}
+              folder="expertise"
+              onChange={(image) => updateItem(index, { image })}
+            />
+            <button
+              type="button"
+              className="admin-btn admin-btn--danger"
+              onClick={() => setRoot({ items: expertise.items.filter((_, i) => i !== index) })}
+            >
+              Delete card
+            </button>
+          </div>
+        </details>
+      ))}
+
+      <h3 className="admin-subtitle">Tools marquee</h3>
+      <button
+        type="button"
+        className="admin-btn admin-btn--primary admin-btn--mb"
+        onClick={() =>
+          setRoot({
+            tools: [...expertise.tools, { id: `tool-${Date.now()}`, label: 'New tool', image: '' }],
+          })
+        }
+      >
+        + Add tool
+      </button>
+      {expertise.tools.map((tool, index) => (
+        <details key={tool.id} className="admin-accordion">
+          <summary>{tool.label}</summary>
+          <div className="admin-form-grid">
+            <Field label="Label (text)">
+              <input value={tool.label} onChange={(e) => updateTool(index, { label: e.target.value })} />
+            </Field>
+            <ImageField
+              label="Tool icon"
+              hint="Upload tool logo (Figma, Photoshop, etc.)."
+              value={tool.image}
+              folder="expertise/tools"
+              onChange={(image) => updateTool(index, { image })}
+            />
+            <button
+              type="button"
+              className="admin-btn admin-btn--danger"
+              onClick={() => setRoot({ tools: expertise.tools.filter((_, i) => i !== index) })}
+            >
+              Delete tool
+            </button>
+          </div>
+        </details>
+      ))}
     </>
   )
 }
