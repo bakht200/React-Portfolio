@@ -338,6 +338,45 @@
   margin-top: 8px;
 }
 
+.admin-logo-field {
+  grid-column: 1 / -1;
+  padding: 20px;
+  border: 1px solid #e8e8ec;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.admin-logo-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #060612;
+  margin-bottom: 4px;
+}
+
+.admin-logo-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0;
+  padding: 24px;
+  min-height: 100px;
+  border: 1px dashed #d4d4dc;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.admin-logo-preview img {
+  max-width: 80px;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+.admin-logo-empty {
+  font-size: 13px;
+  color: #8a8a93;
+}
+
 .admin-upload-preview {
   margin-top: 10px;
   padding: 10px;

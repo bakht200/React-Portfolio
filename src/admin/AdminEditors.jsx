@@ -91,6 +91,64 @@ function ImageUpload({ onUploaded, folder = 'uploads', label = 'Upload image' })
   )
 }
 
+function LogoUploadField({ value, onChange }) {
+  const inputRef = useRef(null)
+  const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState('')
+  const [done, setDone] = useState('')
+  const previewSrc = value ? resolveContentAsset(value) : null
+
+  const handleChange = async (event) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    setError('')
+    setDone('')
+    try {
+      const url = await uploadPortfolioImage(file, 'site')
+      onChange(url)
+      setDone('Logo uploaded — publishing…')
+    } catch (err) {
+      setError(err.message || 'Upload failed. Sign in and try again.')
+    } finally {
+      setUploading(false)
+      event.target.value = ''
+    }
+  }
+
+  return (
+    <div className="admin-logo-field">
+      <span className="admin-logo-label">Logo</span>
+      <p className="admin-field-hint">Upload a new logo for the header and footer. PNG, JPG, or SVG.</p>
+      <div className="admin-logo-preview">
+        {previewSrc ? (
+          <img src={previewSrc} alt="Current logo" />
+        ) : (
+          <span className="admin-logo-empty">No logo yet</span>
+        )}
+      </div>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*,.svg"
+        disabled={uploading}
+        hidden
+        onChange={handleChange}
+      />
+      <button
+        type="button"
+        className="admin-btn admin-btn--primary"
+        disabled={uploading}
+        onClick={() => inputRef.current?.click()}
+      >
+        {uploading ? 'Uploading…' : 'Upload new logo'}
+      </button>
+      {done ? <span className="admin-upload-hint admin-upload-hint--ok">{done}</span> : null}
+      {error ? <span className="admin-error">{error}</span> : null}
+    </div>
+  )
+}
+
 function ImageField({ label, value, onChange, folder = 'uploads', hint }) {
   const previewSrc = value ? resolveContentAsset(value) : null
 
@@ -293,11 +351,8 @@ export function HeroEditor() {
         <Field label="Your name">
           <input value={site.name} onChange={(e) => updateSection('site', { ...site, name: e.target.value })} />
         </Field>
-        <ImageField
-          label="Logo"
-          hint="Upload PNG, JPG, or SVG — stored in Supabase and shown in the header & footer."
+        <LogoUploadField
           value={site.logoAsset}
-          folder="site"
           onChange={(logoAsset) => updateSection('site', { ...site, logoAsset })}
         />
         <Field label="Hero badge">
