@@ -10,6 +10,7 @@ import {
   FaqEditor,
   FooterEditor,
   HeroEditor,
+  HowIWorkEditor,
   OrbitEditor,
   ProjectsEditor,
   ThemeEditor,
@@ -34,6 +35,7 @@ export default function AdminApp() {
         <Route path="hero" element={<HeroEditor />} />
         <Route path="trusted" element={<TrustedEditor />} />
         <Route path="expertise" element={<ExpertiseEditor />} />
+        <Route path="how-i-work" element={<HowIWorkEditor />} />
         <Route path="projects" element={<ProjectsEditor />} />
         <Route path="case-studies" element={<CaseStudiesEditor />} />
         <Route path="about" element={<AboutEditor />} />

@@ -9,6 +9,7 @@ const NAV = [
   { to: '/admin/hero', label: 'Hero & Site' },
   { to: '/admin/trusted', label: 'Proudly Worked With' },
   { to: '/admin/expertise', label: 'Expertise' },
+  { to: '/admin/how-i-work', label: 'How I Work' },
   { to: '/admin/projects', label: 'Projects' },
   { to: '/admin/case-studies', label: 'Case Studies' },
   { to: '/admin/about', label: 'About' },

@@ -277,6 +277,7 @@ export function AdminDashboard() {
             <li><Link to="/admin/hero">Hero & Site info</Link></li>
             <li><Link to="/admin/trusted">Proudly Worked With</Link></li>
             <li><Link to="/admin/expertise">Expertise</Link></li>
+            <li><Link to="/admin/how-i-work">How I Work</Link></li>
             <li><Link to="/admin/projects">Projects</Link></li>
             <li><Link to="/admin/case-studies">Case Studies</Link></li>
             <li><Link to="/admin/about">About page</Link></li>
@@ -607,6 +608,122 @@ export function ExpertiseEditor() {
               onClick={() => setRoot({ tools: expertise.tools.filter((_, i) => i !== index) })}
             >
               Delete tool
+            </button>
+          </div>
+        </details>
+      ))}
+    </>
+  )
+}
+
+const HOW_I_WORK_ICON_OPTIONS = [
+  { value: 'bulb', label: 'Lightbulb (research)' },
+  { value: 'pen', label: 'Pen (design)' },
+  { value: 'rocket', label: 'Rocket (ship)' },
+]
+
+export function HowIWorkEditor() {
+  const { content, updateSection } = useContent()
+  const raw = content.howIWork ?? {}
+  const howIWork = {
+    badge: raw.badge ?? 'How I Work',
+    heading: raw.heading ?? '',
+    subheading: raw.subheading ?? '',
+    steps: raw.steps ?? [],
+  }
+
+  const setRoot = (patch) => updateSection('howIWork', { ...howIWork, ...patch })
+
+  const updateStep = (index, patch) => {
+    const steps = howIWork.steps.map((step, i) => (i === index ? { ...step, ...patch } : step))
+    setRoot({ steps })
+  }
+
+  return (
+    <>
+      <SectionHeader
+        title="How I Work"
+        description="Three-step process section with optional custom icons per card."
+      />
+      <div className="admin-form-grid">
+        <Field label="Badge">
+          <input value={howIWork.badge} onChange={(e) => setRoot({ badge: e.target.value })} />
+        </Field>
+        <Field label="Heading">
+          <input value={howIWork.heading} onChange={(e) => setRoot({ heading: e.target.value })} />
+        </Field>
+        <Field label="Subheading">
+          <textarea
+            rows={3}
+            value={howIWork.subheading}
+            onChange={(e) => setRoot({ subheading: e.target.value })}
+          />
+        </Field>
+      </div>
+
+      <button
+        type="button"
+        className="admin-btn admin-btn--primary admin-btn--mb"
+        onClick={() =>
+          setRoot({
+            steps: [
+              ...howIWork.steps,
+              {
+                id: `step-${Date.now()}`,
+                number: String(howIWork.steps.length + 1).padStart(2, '0'),
+                title: 'New step',
+                description: 'Describe this step.',
+                icon: 'bulb',
+                image: '',
+              },
+            ],
+          })
+        }
+      >
+        + Add step
+      </button>
+
+      {howIWork.steps.map((step, index) => (
+        <details key={step.id} className="admin-accordion" open={index === 0}>
+          <summary>
+            {step.number}. {step.title}
+          </summary>
+          <div className="admin-form-grid">
+            <Field label="Step number">
+              <input value={step.number} onChange={(e) => updateStep(index, { number: e.target.value })} />
+            </Field>
+            <Field label="Title">
+              <input value={step.title} onChange={(e) => updateStep(index, { title: e.target.value })} />
+            </Field>
+            <Field label="Description">
+              <textarea
+                rows={4}
+                value={step.description}
+                onChange={(e) => updateStep(index, { description: e.target.value })}
+              />
+            </Field>
+            <Field label="Built-in icon (if no custom image)">
+              <select value={step.icon} onChange={(e) => updateStep(index, { icon: e.target.value })}>
+                {HOW_I_WORK_ICON_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <ImageField
+              label="Custom step image"
+              hint="Optional — replaces the built-in illustration on this card."
+              value={step.image}
+              folder="how-i-work"
+              onChange={(image) => updateStep(index, { image })}
+            />
+            <button
+              type="button"
+              className="admin-btn admin-btn--danger"
+              onClick={() => setRoot({ steps: howIWork.steps.filter((_, i) => i !== index) })}
+            >
+              Delete step
             </button>
           </div>
         </details>

@@ -631,6 +631,10 @@ function HowItWorksIcon({ type }) {
 }
 
 function HowIWorkSection() {
+  const { content } = useContent()
+  const how = content.howIWork ?? {}
+  const steps = how.steps?.length ? how.steps : HOW_I_WORK_STEPS
+
   return (
     <ScrollRevealSection
       className="how-section"
@@ -639,32 +643,56 @@ function HowIWorkSection() {
     >
       <div className="how-inner reveal-group">
         <RevealItem>
-          <span className="how-badge">How I Work</span>
-          <h2 className="how-heading">How I approach a design problem.</h2>
+          <span className="how-badge">{how.badge || 'How I Work'}</span>
+          <h2 className="how-heading">{how.heading || 'How I approach a design problem.'}</h2>
           <p className="how-subheading">
-            Not a rigid process — a mindset that adapts to the problem at hand.
+            {how.subheading ||
+              'Not a rigid process — a mindset that adapts to the problem at hand.'}
           </p>
         </RevealItem>
 
         <RevealItem className="how-cards-wrap" delay={120}>
           <div className="how-cards">
-            <article className="how-card how-card--1">
-              <div className="how-card-inner">
-                <span className="how-card-number">{HOW_I_WORK_STEPS[0].number}</span>
-                <h3 className="how-card-title">{HOW_I_WORK_STEPS[0].title}</h3>
-                <div className="how-card-icon" aria-hidden="true">
-                  <HowItWorksIcon type={HOW_I_WORK_STEPS[0].icon} />
-                </div>
-                <p className="how-card-text">{HOW_I_WORK_STEPS[0].description}</p>
-              </div>
-            </article>
+            {steps.map((step, index) => (
+              <HowIWorkStep key={step.id} step={step} index={index} total={steps.length} />
+            ))}
+          </div>
+        </RevealItem>
+      </div>
+    </ScrollRevealSection>
+  )
+}
 
-            <svg
-              className="how-arrow how-arrow--one"
-              viewBox="0 0 100 56"
-              fill="none"
-              aria-hidden="true"
-            >
+function HowIWorkStep({ step, index, total }) {
+  const cardClass = `how-card how-card--${index + 1}`
+  const iconClass =
+    step.icon === 'rocket' ? 'how-card-icon how-card-icon--rocket' : 'how-card-icon'
+
+  return (
+    <>
+      <article className={cardClass}>
+        <div className="how-card-inner">
+          <span className="how-card-number">{step.number}</span>
+          <h3 className="how-card-title">{step.title}</h3>
+          <div className={iconClass} aria-hidden="true">
+            {step.image ? (
+              <img className="how-card-img" src={resolveContentAsset(step.image)} alt="" />
+            ) : (
+              <HowItWorksIcon type={step.icon} />
+            )}
+          </div>
+          <p className="how-card-text">{step.description}</p>
+        </div>
+      </article>
+      {index < total - 1 ? (
+        <svg
+          className={`how-arrow how-arrow--${index === 0 ? 'one' : 'two'}`}
+          viewBox="0 0 100 56"
+          fill="none"
+          aria-hidden="true"
+        >
+          {index === 0 ? (
+            <>
               <path
                 d="M4 44C28 8 52 8 96 18"
                 stroke="currentColor"
@@ -678,25 +706,9 @@ function HowIWorkSection() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-            </svg>
-
-            <article className="how-card how-card--2">
-              <div className="how-card-inner">
-                <span className="how-card-number">{HOW_I_WORK_STEPS[1].number}</span>
-                <h3 className="how-card-title">{HOW_I_WORK_STEPS[1].title}</h3>
-                <div className="how-card-icon" aria-hidden="true">
-                  <HowItWorksIcon type={HOW_I_WORK_STEPS[1].icon} />
-                </div>
-                <p className="how-card-text">{HOW_I_WORK_STEPS[1].description}</p>
-              </div>
-            </article>
-
-            <svg
-              className="how-arrow how-arrow--two"
-              viewBox="0 0 100 56"
-              fill="none"
-              aria-hidden="true"
-            >
+            </>
+          ) : (
+            <>
               <path
                 d="M4 12C28 48 52 48 96 38"
                 stroke="currentColor"
@@ -710,22 +722,11 @@ function HowIWorkSection() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-            </svg>
-
-            <article className="how-card how-card--3">
-              <div className="how-card-inner">
-                <span className="how-card-number">{HOW_I_WORK_STEPS[2].number}</span>
-                <h3 className="how-card-title">{HOW_I_WORK_STEPS[2].title}</h3>
-                <div className="how-card-icon how-card-icon--rocket" aria-hidden="true">
-                  <HowItWorksIcon type={HOW_I_WORK_STEPS[2].icon} />
-                </div>
-                <p className="how-card-text">{HOW_I_WORK_STEPS[2].description}</p>
-              </div>
-            </article>
-          </div>
-        </RevealItem>
-      </div>
-    </ScrollRevealSection>
+            </>
+          )}
+        </svg>
+      ) : null}
+    </>
   )
 }
 

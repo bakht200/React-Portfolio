@@ -100,6 +100,41 @@ export const defaultContent = {
     ],
   },
 
+  howIWork: {
+    badge: 'How I Work',
+    heading: 'How I approach a design problem.',
+    subheading: 'Not a rigid process — a mindset that adapts to the problem at hand.',
+    steps: [
+      {
+        id: 'understand',
+        number: '01',
+        title: 'Understand the Problem',
+        description:
+          'I start with research — talking to users, mapping existing workflows, and aligning with stakeholders on what success actually looks like. No screens until the problem is clear.',
+        icon: 'bulb',
+        image: '',
+      },
+      {
+        id: 'design',
+        number: '02',
+        title: 'Design & Iterate',
+        description:
+          'From wireframes to high-fidelity UI, I design in tight loops — testing assumptions early, refining based on feedback, and building design systems that scale with the product.',
+        icon: 'pen',
+        image: '',
+      },
+      {
+        id: 'ship',
+        number: '03',
+        title: 'Ship & Support',
+        description:
+          'I stay involved through developer handoff to make sure what ships matches what was designed — and keep iterating post-launch based on real usage data.',
+        icon: 'rocket',
+        image: '',
+      },
+    ],
+  },
+
   categories: [
     { id: 'healthcare', label: 'Healthcare & HIPAA' },
     { id: 'ai-products', label: 'AI Products' },
