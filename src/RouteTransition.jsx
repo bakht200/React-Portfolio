@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import AboutPage from './AboutPage'
+import AdminApp from './admin/AdminApp'
 import CaseStudiesListPage from './CaseStudiesListPage'
 import CaseStudyDetailPage from './CaseStudyDetailPage'
 import ProjectDetailPage from './ProjectDetailPage'
@@ -36,6 +37,7 @@ export default function RouteTransition({ homePage }) {
       className={`page-transition page-transition--${directionRef.current}`}
     >
       <Routes location={location}>
+        <Route path="/admin/*" element={<AdminApp />} />
         <Route path="/" element={homePage} />
         <Route path="/projects" element={<ProjectsListPage />} />
         <Route path="/projects/:id" element={<ProjectDetailPage />} />
@@ -43,7 +45,7 @@ export default function RouteTransition({ homePage }) {
         <Route path="/case-studies/:id" element={<CaseStudyDetailPage />} />
         <Route path="/about" element={<AboutPage />} />
       </Routes>
-      <ScrollFab />
+      {!location.pathname.startsWith('/admin') ? <ScrollFab /> : null}
     </div>
   )
 }

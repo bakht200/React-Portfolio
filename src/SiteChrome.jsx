@@ -2,6 +2,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logoIcon from './assets/HG icon.svg'
 import { aboutPath } from './about'
 import { caseStudiesListPath } from './caseStudies'
+import { useContent } from './content/ContentContext'
+import { resolveContentAsset } from './content/resolveAsset'
 import { projectsListPath } from './projects'
 import { navToSection, scrollToSection, NAV_FORWARD } from './pageTransition'
 
@@ -77,21 +79,24 @@ function AboutNavLink({ className, children }) {
 }
 
 function Topbar() {
+  const { content } = useContent()
+  const logoSrc = resolveContentAsset(content.site.logoAsset)
+
   return (
     <header className="topbar-wrapper">
       <div className="nav-container">
         <NavAnchor className="logo-group" href="#home" aria-label="Home">
           <img
             className="logo-image"
-            src={logoIcon}
-            alt="HG"
+            src={logoSrc || logoIcon}
+            alt={content.site.name}
             width={36}
             height={36}
           />
         </NavAnchor>
         <div className="right-group">
           <nav className="nav-links" aria-label="Main navigation">
-            {SECTION_LINKS.map(({ label, href }) => (
+            {content.nav.links.map(({ label, href }) => (
               <NavAnchor key={href} href={href}>
                 {label}
               </NavAnchor>
@@ -165,6 +170,10 @@ function FooterLink({ item }) {
 }
 
 function Footer() {
+  const { content } = useContent()
+  const { footer, site } = content
+  const logoSrc = resolveAsset(site.logoAsset)
+
   return (
     <footer className="site-footer">
       <div className="footer-main">
@@ -174,16 +183,14 @@ function Footer() {
               <div className="footer-logo-row">
                 <img
                   className="footer-logo"
-                  src={logoIcon}
+                  src={logoSrc || logoIcon}
                   alt=""
                   width={32}
                   height={32}
                 />
-                <span className="footer-brand-name">Haider Ghauri</span>
+                <span className="footer-brand-name">{site.name}</span>
               </div>
-              <p className="footer-tagline">
-                Crafting digital experiences that move products forward.
-              </p>
+              <p className="footer-tagline">{footer.tagline}</p>
               <div className="footer-newsletter">
                 <h3 className="footer-newsletter-title">Updates that keep you ahead</h3>
                 <form
@@ -193,7 +200,7 @@ function Footer() {
                   <input
                     className="footer-newsletter-input"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder={footer.newsletterPlaceholder}
                     aria-label="Email address"
                   />
                   <button
@@ -235,20 +242,20 @@ function Footer() {
               <p className="footer-col-label">Get in touch</p>
               <ul className="footer-contact-list">
                 <li>
-                  <a className="footer-contact-link" href="tel:+15551234567">
-                    +1 (555) 123-4567
+                  <a className="footer-contact-link" href={`tel:${footer.phone.replace(/\s/g, '')}`}>
+                    {footer.phone}
                   </a>
                 </li>
                 <li>
-                  <a className="footer-contact-link" href="mailto:hello@haiderghauri.com">
-                    hello@haiderghauri.com
+                  <a className="footer-contact-link" href={`mailto:${footer.email}`}>
+                    {footer.email}
                   </a>
                 </li>
                 <li>
                   <span className="footer-contact-text">
-                    San Francisco, CA
+                    {footer.addressLine1}
                     <br />
-                    United States
+                    {footer.addressLine2}
                   </span>
                 </li>
               </ul>
@@ -283,20 +290,20 @@ function Footer() {
 
       <div className="footer-bar">
         <div className="footer-bar-inner">
-          <p className="footer-credit">© 2026 Haider Ghauri. All rights reserved.</p>
+          <p className="footer-credit">{footer.copyright}</p>
           <p className="footer-meta">
             Designed by{' '}
             <Link className="footer-meta-link" to="/">
-              Haider Ghauri
+              {footer.designedBy}
             </Link>
             , Powered by{' '}
             <a
               className="footer-meta-link"
-              href="https://www.framer.com"
+              href={footer.poweredByUrl}
               target="_blank"
               rel="noreferrer"
             >
-              Framer
+              {footer.poweredBy}
             </a>
           </p>
         </div>

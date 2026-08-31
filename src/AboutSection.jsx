@@ -1,16 +1,15 @@
 import { Link } from 'react-router-dom'
 import profilePhoto from './assets/recommend-optimized.png'
-import {
-  ABOUT_BIO,
-  ABOUT_STATS,
-  EDUCATION,
-  STACK_TOOLS,
-  WORK_EXPERIENCE,
-} from './about'
+import { getAboutContent } from './about'
+import { useContent } from './content/ContentContext'
 import { NAV_BACK_HOME } from './pageTransition'
 import { StackToolIcon } from './stackIcons'
 
 export default function AboutSection({ showBack = false }) {
+  useContent()
+  const { stats, bio, workExperience, stackTools, education, profilePhoto: aboutPhoto } =
+    getAboutContent()
+
   return (
     <section
       className={`about-section${showBack ? ' about-section--page' : ''}`}
@@ -24,7 +23,7 @@ export default function AboutSection({ showBack = false }) {
         )}
 
         <ul className="about-stats-bar">
-          {ABOUT_STATS.map((stat) => (
+          {stats.map((stat) => (
             <li className="about-stat-item" key={stat.id}>
               <span className="about-stat-label">{stat.label}</span>
               <span className={`about-stat-value${stat.highlight ? ' about-stat-value--accent' : ''}`}>
@@ -36,22 +35,19 @@ export default function AboutSection({ showBack = false }) {
 
         <div className="about-hero">
           <div className="about-intro">
-            <h1 className="about-greeting">{ABOUT_BIO.greeting}</h1>
-            <p className="about-title">{ABOUT_BIO.title}</p>
-            <p className="about-text">
-              A <strong className="about-accent">Product Designer</strong>, with a passion for designing impactful
-              digital products and high-performing landing pages. With{' '}
-              <strong>5+ years</strong> of experience, I specialize in transforming ideas
-              into seamless, user-friendly experiences that balance aesthetics with
-              functionality.
-            </p>
-            <p className="about-text">{ABOUT_BIO.paragraphs[1]}</p>
+            <h1 className="about-greeting">{bio.greeting}</h1>
+            <p className="about-title">{bio.title}</p>
+            {bio.paragraphs.map((paragraph) => (
+              <p className="about-text" key={paragraph.slice(0, 24)}>
+                {paragraph}
+              </p>
+            ))}
           </div>
 
           <div className="about-photo-wrap">
             <img
               className="about-photo"
-              src={profilePhoto}
+              src={aboutPhoto || profilePhoto}
               alt="Haider Ghauri"
               width={420}
               height={520}
@@ -62,7 +58,7 @@ export default function AboutSection({ showBack = false }) {
         <div className="about-block">
           <h2 className="about-block-heading">Work Experience</h2>
           <div className="about-jobs">
-            {WORK_EXPERIENCE.map((job, index) => (
+            {workExperience.map((job, index) => (
               <div className="about-job-group" key={job.id}>
                 <article className="about-job-row">
                   <div className="about-job-left">
@@ -79,7 +75,7 @@ export default function AboutSection({ showBack = false }) {
                   </div>
                   <p className="about-job-description">{job.description}</p>
                 </article>
-                {index < WORK_EXPERIENCE.length - 1 && (
+                {index < workExperience.length - 1 && (
                   <hr className="about-divider" />
                 )}
               </div>
@@ -90,7 +86,7 @@ export default function AboutSection({ showBack = false }) {
         <div className="about-block">
           <h2 className="about-block-heading">My Stack</h2>
           <div className="about-stack-grid">
-            {STACK_TOOLS.map((tool) => (
+            {stackTools.map((tool) => (
               <article className="about-stack-card" key={tool.id}>
                 <div className="about-stack-icon">
                   <StackToolIcon id={tool.id} />
@@ -109,11 +105,11 @@ export default function AboutSection({ showBack = false }) {
           <article className="about-education-row">
             <div className="about-education-left">
               <p className="about-job-meta">
-                {EDUCATION.school}
+                {education.school}
                 <span aria-hidden="true"> | </span>
-                {EDUCATION.period}
+                {education.period}
               </p>
-              <h3 className="about-job-role">{EDUCATION.degree}</h3>
+              <h3 className="about-job-role">{education.degree}</h3>
             </div>
           </article>
         </div>

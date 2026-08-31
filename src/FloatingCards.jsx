@@ -1,9 +1,9 @@
 // Satellite icon cards — locked to the same arc centers/radii as PremiumArcPainter
 
 import PremiumArcPainter from './PremiumArcPainter'
+import { useContent } from './content/ContentContext'
 import { getSideAngles, pointOnArc } from './orbitGeometry'
 
-// Prefix with BASE_URL so icons resolve under GitHub Pages (/React-Portfolio/)
 const asset = (path) => `${import.meta.env.BASE_URL}${path}`
 
 const ICONS = {
@@ -27,65 +27,32 @@ const ICONS = {
   aiAudio: asset('orbit-icons/ai-audio.svg'),
 }
 
-/**
- * All icons on the 2nd arc only (ring index 1).
- * Equal spacing around the full 360° orbit so the visible limb
- * never goes empty (gap ≤ visible window ⇒ always ≥ 1 on-screen).
- */
 const ORBIT_RING = 1
-const ORBIT_DURATION_MS = 55000
-const ORBIT_DURATION_S = ORBIT_DURATION_MS / 1000
+const CARD = 52
 
-const LEFT_ICONS = [
-  'figma',
-  'framer',
-  'notion',
-  'paintBoard',
-  'penTool',
-  'dashboard',
-  'idea',
-  'photoshop',
-  'aiWeb',
-]
-
-const RIGHT_ICONS = [
-  'chatgpt',
-  'claude',
-  'css',
-  'tailwind',
-  'behance',
-  'dribbble',
-  'pinterest',
-  'smartphone',
-  'aiAudio',
-]
-
-function buildSatellites(side, icons) {
+function buildSatellites(side, icons, durationMs) {
   const { startAngle } = getSideAngles(side)
   const startDeg = (startAngle * 180) / Math.PI
   const count = icons.length
+  if (count === 0) return []
   const gap = 360 / count
   const reverse = side === 'right'
   const phase = side === 'right' ? gap / 2 : 0
+  const duration = durationMs / 1000
 
   return icons.map((icon, index) => ({
     id: `${side}-${icon}-${index}`,
     ring: ORBIT_RING,
     icon,
     angle: startDeg + phase + gap * index,
-    duration: ORBIT_DURATION_S,
+    duration,
     reverse,
   }))
 }
 
-const LEFT_SATELLITES = buildSatellites('left', LEFT_ICONS)
-const RIGHT_SATELLITES = buildSatellites('right', RIGHT_ICONS)
-
-const CARD = 52
-
-function Satellite({ side, item }) {
+function Satellite({ item }) {
   const angleRad = (item.angle * Math.PI) / 180
-  const { cx, cy, x, y } = pointOnArc(side, item.ring, angleRad)
+  const { cx, cy, x, y } = pointOnArc(item.side, item.ring, angleRad)
 
   return (
     <g
@@ -121,18 +88,24 @@ function Satellites({ side, items }) {
   return (
     <g className={`satellites satellites--${side}`}>
       {items.map((item) => (
-        <Satellite key={item.id} side={side} item={item} />
+        <Satellite key={item.id} item={{ ...item, side }} />
       ))}
     </g>
   )
 }
 
 export default function FloatingCards() {
+  const { content } = useContent()
+  const { leftIcons, rightIcons, durationMs } = content.orbit
+
+  const leftSatellites = buildSatellites('left', leftIcons, durationMs)
+  const rightSatellites = buildSatellites('right', rightIcons, durationMs)
+
   return (
     <div className="floating-cards" aria-hidden="true">
       <PremiumArcPainter>
-        <Satellites side="left" items={LEFT_SATELLITES} />
-        <Satellites side="right" items={RIGHT_SATELLITES} />
+        <Satellites side="left" items={leftSatellites} />
+        <Satellites side="right" items={rightSatellites} />
       </PremiumArcPainter>
     </div>
   )

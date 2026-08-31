@@ -2,11 +2,13 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import ProjectsSection from './ProjectsSection'
 import SiteChrome from './SiteChrome'
 import { getCategoryLabel } from './categories'
+import { useContent } from './content/ContentContext'
 import { getProjectById, projectsListPath } from './projects'
 import { NAV_BACK_TO_PROJECTS_LIST } from './pageTransition'
 import './App.css'
 
 export default function ProjectDetailPage() {
+  useContent()
   const { id } = useParams()
   const project = getProjectById(id)
 

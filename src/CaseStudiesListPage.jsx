@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom'
-import { CASE_STUDIES, caseStudyPath } from './caseStudies'
+import { useContent } from './content/ContentContext'
+import { caseStudyPath, getCaseStudies } from './caseStudies'
 import { NAV_BACK_TO_CASE_STUDIES, NAV_FORWARD } from './pageTransition'
 import SiteChrome from './SiteChrome'
 import './App.css'
 
 export default function CaseStudiesListPage() {
+  useContent()
+  const caseStudies = getCaseStudies()
+
   return (
     <>
       <SiteChrome />
@@ -15,7 +19,7 @@ export default function CaseStudiesListPage() {
           </Link>
           <h1 className="case-studies-heading">All Case Studies</h1>
           <div className="case-studies-grid">
-            {CASE_STUDIES.map((study) => (
+            {caseStudies.map((study) => (
               <article className="case-study-card" key={study.id}>
                 <Link
                   className="case-study-link"

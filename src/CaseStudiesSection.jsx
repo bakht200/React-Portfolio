@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom'
-import { COLLAPSED_ITEM_COUNT } from './categories'
-import {
-  CASE_STUDIES,
-  caseStudiesListPath,
-  caseStudyPath,
-} from './caseStudies'
+import { getCollapsedItemCount } from './categories'
+import { useContent } from './content/ContentContext'
+import { caseStudiesListPath, caseStudyPath, getCaseStudies } from './caseStudies'
 import { NAV_FORWARD } from './pageTransition'
 
 export default function CaseStudiesSection({
@@ -14,12 +11,15 @@ export default function CaseStudiesSection({
   bordered = false,
   id = 'case-studies',
 }) {
+  useContent()
+  const caseStudies = getCaseStudies()
+  const collapsedCount = getCollapsedItemCount()
   const pool = excludeId
-    ? CASE_STUDIES.filter((study) => study.id !== excludeId)
-    : CASE_STUDIES
+    ? caseStudies.filter((study) => study.id !== excludeId)
+    : caseStudies
 
-  const visibleStudies = pool.slice(0, COLLAPSED_ITEM_COUNT)
-  const canViewAll = showViewAll && pool.length > COLLAPSED_ITEM_COUNT
+  const visibleStudies = pool.slice(0, collapsedCount)
+  const canViewAll = showViewAll && pool.length > collapsedCount
 
   return (
     <section className="case-studies-section" id={id}>

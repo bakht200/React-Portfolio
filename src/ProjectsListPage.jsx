@@ -1,15 +1,19 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FILTER_CATEGORIES } from './categories'
+import { getFilterCategories } from './categories'
+import { useContent } from './content/ContentContext'
 import { NAV_BACK_TO_PROJECTS, NAV_FORWARD } from './pageTransition'
-import { PROJECTS, projectPath } from './projects'
+import { getProjects, projectPath } from './projects'
 import SiteChrome from './SiteChrome'
 import './App.css'
 
 export default function ProjectsListPage() {
+  useContent()
   const [category, setCategory] = useState('all')
+  const projects = getProjects()
+  const filterCategories = getFilterCategories()
 
-  const visibleProjects = PROJECTS.filter(
+  const visibleProjects = projects.filter(
     (project) => category === 'all' || project.categoryId === category,
   )
 
@@ -28,7 +32,7 @@ export default function ProjectsListPage() {
             <aside className="projects-filter" aria-label="Filter projects by category">
               <p className="projects-filter-label">Category</p>
               <ul className="projects-filter-list">
-                {FILTER_CATEGORIES.map((item) => (
+                {filterCategories.map((item) => (
                   <li key={item.id}>
                     <button
                       type="button"

@@ -2,11 +2,13 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import CaseStudiesSection from './CaseStudiesSection'
 import SiteChrome from './SiteChrome'
 import CaseStudyPdfViewer from './CaseStudyPdfViewer'
+import { useContent } from './content/ContentContext'
 import { caseStudiesListPath, caseStudyPdfUrl, getCaseStudyById } from './caseStudies'
 import { NAV_BACK_TO_CASE_STUDIES_LIST } from './pageTransition'
 import './App.css'
 
 export default function CaseStudyDetailPage() {
+  useContent()
   const { id } = useParams()
   const study = getCaseStudyById(id)
 

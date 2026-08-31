@@ -1,22 +1,26 @@
-export const INDUSTRY_CATEGORIES = [
-  { id: 'healthcare', label: 'Healthcare & HIPAA' },
-  { id: 'ai-products', label: 'AI Products' },
-  { id: 'hrms', label: 'HRMS & HCM' },
-  { id: 'fintech', label: 'Fintech' },
-  { id: 'ecommerce', label: 'E-Commerce' },
-  { id: 'inventory', label: 'Inventory & Ops' },
-]
+import { getContentSnapshot } from './content/contentStore'
 
-export const FILTER_CATEGORIES = [
-  { id: 'all', label: 'All' },
-  ...INDUSTRY_CATEGORIES,
-]
+export function getCategories() {
+  return getContentSnapshot().categories
+}
 
-export const COLLAPSED_ITEM_COUNT = 3
+export function getFilterCategories() {
+  return [{ id: 'all', label: 'All' }, ...getCategories()]
+}
+
+export function getCollapsedItemCount() {
+  return getContentSnapshot().collapsedItemCount ?? 3
+}
+
+/** @deprecated use getCategories() */
+export const INDUSTRY_CATEGORIES = getCategories()
+
+/** @deprecated use getFilterCategories() */
+export const FILTER_CATEGORIES = getFilterCategories()
+
+/** @deprecated use getCollapsedItemCount() */
+export const COLLAPSED_ITEM_COUNT = getCollapsedItemCount()
 
 export function getCategoryLabel(categoryId) {
-  return (
-    INDUSTRY_CATEGORIES.find((category) => category.id === categoryId)?.label ??
-    categoryId
-  )
+  return getCategories().find((category) => category.id === categoryId)?.label ?? categoryId
 }

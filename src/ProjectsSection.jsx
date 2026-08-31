@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 import logoIcon from './assets/HG icon.svg'
 import {
-  COLLAPSED_ITEM_COUNT,
+  getCollapsedItemCount,
   getCategoryLabel,
 } from './categories'
+import { useContent } from './content/ContentContext'
 import { NAV_FORWARD } from './pageTransition'
-import { PROJECTS, projectPath, projectsListPath } from './projects'
+import { getProjects, projectPath, projectsListPath } from './projects'
 
 function ProjectsShowcase({ projects, projectCount, showExploreCta }) {
   const rowA = projects.filter((_, index) => index % 2 === 0)
@@ -90,12 +91,15 @@ export default function ProjectsSection({
   variant = 'default',
   id = 'projects',
 }) {
+  useContent()
+  const allProjects = getProjects()
+  const collapsedCount = getCollapsedItemCount()
   const pool = excludeId
-    ? PROJECTS.filter((project) => project.id !== excludeId)
-    : PROJECTS
+    ? allProjects.filter((project) => project.id !== excludeId)
+    : allProjects
 
-  const visibleProjects = pool.slice(0, COLLAPSED_ITEM_COUNT)
-  const canViewAll = showViewAll && pool.length > COLLAPSED_ITEM_COUNT
+  const visibleProjects = pool.slice(0, collapsedCount)
+  const canViewAll = showViewAll && pool.length > collapsedCount
   const isShowcase = variant === 'default'
 
   const gridClassName =
@@ -119,7 +123,7 @@ export default function ProjectsSection({
         {isShowcase ? (
           <ProjectsShowcase
             projects={pool}
-            projectCount={PROJECTS.length}
+            projectCount={allProjects.length}
             showExploreCta={canViewAll || showViewAll}
           />
         ) : (

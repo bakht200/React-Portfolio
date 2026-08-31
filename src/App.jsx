@@ -8,6 +8,8 @@ import RouteTransition from './RouteTransition'
 import SiteChrome, { NavAnchor } from './SiteChrome'
 import { NAV_FORWARD } from './pageTransition'
 import { scrollToSection } from './pageTransition'
+import { useContent } from './content/ContentContext'
+import { resolveContentAsset } from './content/resolveAsset'
 import FloatingCards from './FloatingCards'
 import profilePhoto from './assets/recommend-optimized.png'
 import strategyWorkspace from './assets/strategy-workspace.jpg'
@@ -132,36 +134,33 @@ function RevealItem({ children, delay = 0, className = '' }) {
 }
 
 function HeroSection() {
+  const { content } = useContent()
+  const { hero } = content
+
   return (
     <section className="hero-section" id="home">
       <div className="hero-center">
         <a className="hero-badge" href="#contact">
           <span className="hero-badge-dot" aria-hidden="true" />
-          <span>Open to Remote Work</span>
+          <span>{hero.badge}</span>
         </a>
 
         <h1 className="hero-heading">
-          <span className="hero-heading-line">Hi, I&apos;m Haider Ghauri</span>
+          <span className="hero-heading-line">{hero.line1}</span>
           <span className="hero-heading-line">
-            I <span className="hero-heading-accent">Design Products</span>
+            I <span className="hero-heading-accent">{hero.accent}</span>
           </span>
-          <span className="hero-heading-line">People Love to Use.</span>
+          <span className="hero-heading-line">{hero.line3}</span>
         </h1>
 
-        <p className="hero-subheading">
-          I&apos;m a Senior Product Designer with 5+ years of experience
-          building AI platforms, healthcare tools, fintech apps, and
-          enterprise SaaS from first wireframe to final handoff.
-          Available for full-time remote roles and freelance projects
-          across the US, EU, and worldwide.
-        </p>
+        <p className="hero-subheading">{hero.subheading}</p>
 
         <div className="hero-actions">
           <a className="hero-btn hero-btn--primary" href="#contact">
-            Let&apos;s Connect
+            {hero.primaryCta}
           </a>
           <a className="hero-btn hero-btn--secondary" href="#projects">
-            Explore My Work
+            {hero.secondaryCta}
           </a>
         </div>
       </div>
@@ -250,21 +249,23 @@ const CLIENT_LOGOS = [
 ]
 
 function TrustedSection() {
-  const logos = [...CLIENT_LOGOS, ...CLIENT_LOGOS]
+  const { content } = useContent()
+  const clientLogos = content.trusted.logos
+  const logos = [...clientLogos, ...clientLogos]
 
   return (
     <section className="trusted-section" aria-label="Clients and partners">
       <div className="trusted-inner">
-        <p className="trusted-label">Proudly worked with:</p>
+        <p className="trusted-label">{content.trusted.label}</p>
         <div className="trusted-marquee">
           <div className="trusted-track">
             {logos.map((logo, index) => (
               <div
                 className="trusted-logo"
                 key={`${logo.id}-${index}`}
-                aria-hidden={index >= CLIENT_LOGOS.length}
+                aria-hidden={index >= clientLogos.length}
               >
-                {logo.icon}
+                {CLIENT_LOGOS.find((c) => c.id === logo.id)?.icon ?? null}
                 <span>{logo.label}</span>
               </div>
             ))}
@@ -726,6 +727,8 @@ const FAQ_ITEMS = [
 ]
 
 function FaqSection() {
+  const { content } = useContent()
+  const faq = content.faq
   const [openId, setOpenId] = useState(null)
 
   const toggleFaq = (id) => {
@@ -741,11 +744,11 @@ function FaqSection() {
       <div className="faq-inner reveal-group">
         <RevealItem>
           <div className="faq-header">
-            <span className="faq-badge">&gt; GOT QUESTIONS &lt;</span>
+            <span className="faq-badge">{faq.badge}</span>
             <div className="faq-heading-row">
-              <h2 className="faq-heading">We&apos;ve got answers</h2>
+              <h2 className="faq-heading">{faq.heading}</h2>
               <p className="faq-heading-note" aria-hidden="true">
-                <span>Let&apos;s clear things up</span>
+                <span>{faq.note}</span>
                 <svg
                   className="faq-heading-note-arrow"
                   width="48"
@@ -774,7 +777,7 @@ function FaqSection() {
 
         <RevealItem className="faq-list-wrap" delay={100}>
           <div className="faq-list">
-            {FAQ_ITEMS.map((item, index) => {
+            {faq.items.map((item, index) => {
               const isOpen = openId === item.id
 
               return (
@@ -820,9 +823,9 @@ function FaqSection() {
               <span className="faq-footer-avatar faq-footer-avatar--2" />
               <span className="faq-footer-avatar faq-footer-avatar--3" />
             </div>
-            <p className="faq-footer-title">Still have questions?</p>
+            <p className="faq-footer-title">{faq.footerTitle}</p>
             <a className="faq-footer-btn" href="#contact">
-              Let&apos;s talk
+              {faq.footerCta}
             </a>
           </div>
         </RevealItem>
@@ -832,6 +835,11 @@ function FaqSection() {
 }
 
 function CtaSection() {
+  const { content } = useContent()
+  const cta = content.cta
+  const email = content.footer.email
+  const ctaPhoto = resolveContentAsset(cta.profilePhoto)
+
   return (
     <ScrollRevealSection className="cta-section" id="contact" ariaLabel="Contact">
       <div className="cta-inner reveal-group">
@@ -845,22 +853,22 @@ function CtaSection() {
 
             <div className="cta-banner-layout">
               <div className="cta-banner-copy">
-                <p className="cta-banner-eyebrow">Let&apos;s build something great</p>
-                <h2 className="cta-banner-heading">Ready to start your next project?</h2>
-                <a className="cta-banner-btn" href="mailto:hello@haiderghauri.com">
-                  Get started
+                <p className="cta-banner-eyebrow">{cta.eyebrow}</p>
+                <h2 className="cta-banner-heading">{cta.heading}</h2>
+                <a className="cta-banner-btn" href={`mailto:${email}`}>
+                  {cta.button}
                 </a>
               </div>
 
               <div className="cta-booking-card">
                 <p className="cta-booking-status">
                   <span className="cta-booking-dot" aria-hidden="true" />
-                  Available for projects
+                  {cta.bookingStatus}
                 </p>
                 <div className="cta-booking-avatars" aria-hidden="true">
                   <img
                     className="cta-booking-avatar"
-                    src={profilePhoto}
+                    src={ctaPhoto}
                     alt=""
                     width={40}
                     height={40}
@@ -868,10 +876,10 @@ function CtaSection() {
                   <span className="cta-booking-plus">+</span>
                   <span className="cta-booking-you">You</span>
                 </div>
-                <h3 className="cta-booking-title">Quick 15-minute call</h3>
-                <p className="cta-booking-text">Pick a time that works for you.</p>
-                <a className="cta-booking-btn" href="mailto:hello@haiderghauri.com">
-                  Book a free call
+                <h3 className="cta-booking-title">{cta.bookingTitle}</h3>
+                <p className="cta-booking-text">{cta.bookingText}</p>
+                <a className="cta-booking-btn" href={`mailto:${email}`}>
+                  {cta.bookingButton}
                 </a>
               </div>
             </div>
