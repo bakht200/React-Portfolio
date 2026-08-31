@@ -46,6 +46,22 @@ export function resolveContentAsset(key) {
   if (key.startsWith('case-studies/') && key.endsWith('.pdf')) {
     return getPublicStorageUrl('portfolio-pdfs', key)
   }
+  const imagePrefixes = [
+    'uploads/',
+    'about/',
+    'site/',
+    'projects/',
+    'trusted/',
+    'expertise/',
+    'how-i-work/',
+    'cta/',
+  ]
+  if (imagePrefixes.some((prefix) => key.startsWith(prefix))) {
+    return getPublicStorageUrl('portfolio-images', key)
+  }
+  if (key.startsWith('case-studies/')) {
+    return getPublicStorageUrl('portfolio-images', key)
+  }
   return resolveAsset(key)
 }
 

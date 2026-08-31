@@ -4,6 +4,7 @@ import { useContent } from '../content/ContentContext'
 import { publishContent, uploadPortfolioImage, uploadPortfolioPdf } from '../content/supabaseApi'
 import { defaultContent } from '../content/defaultContent'
 import { resolveContentAsset } from '../content/resolveAsset'
+import ImageGalleryPicker from './ImageGalleryPicker'
 
 function Field({ label, children }) {
   return (
@@ -891,65 +892,256 @@ export function CaseStudiesEditor() {
 
 export function AboutEditor() {
   const { content, updateSection } = useContent()
-  const about = content.about
+  const raw = content.about ?? {}
+  const about = {
+    stats: raw.stats ?? [],
+    bio: raw.bio ?? { greeting: '', title: '', paragraphs: [] },
+    workExperience: raw.workExperience ?? [],
+    stackTools: raw.stackTools ?? [],
+    education: raw.education ?? { degree: '', school: '', period: '' },
+    profilePhoto: raw.profilePhoto ?? '',
+    profileRole: raw.profileRole ?? '',
+  }
+
+  const setAbout = (patch) => updateSection('about', { ...about, ...patch })
+
+  const updateStat = (index, patch) => {
+    const stats = about.stats.map((s, i) => (i === index ? { ...s, ...patch } : s))
+    setAbout({ stats })
+  }
+
+  const updateJob = (index, patch) => {
+    const workExperience = about.workExperience.map((j, i) => (i === index ? { ...j, ...patch } : j))
+    setAbout({ workExperience })
+  }
+
+  const updateTool = (index, patch) => {
+    const stackTools = about.stackTools.map((t, i) => (i === index ? { ...t, ...patch } : t))
+    setAbout({ stackTools })
+  }
 
   return (
     <>
-      <SectionHeader title="About Page" />
+      <SectionHeader
+        title="About Page"
+        description="Bio, profile photo, stats, work experience, stack, and education."
+      />
+
+      <h3 className="admin-subtitle">Profile</h3>
       <div className="admin-form-grid">
         <Field label="Greeting">
-          <input value={about.bio.greeting} onChange={(e) => updateSection('about', { ...about, bio: { ...about.bio, greeting: e.target.value } })} />
+          <input
+            value={about.bio.greeting}
+            onChange={(e) => setAbout({ bio: { ...about.bio, greeting: e.target.value } })}
+          />
         </Field>
         <Field label="Title">
-          <input value={about.bio.title} onChange={(e) => updateSection('about', { ...about, bio: { ...about.bio, title: e.target.value } })} />
+          <input
+            value={about.bio.title}
+            onChange={(e) => setAbout({ bio: { ...about.bio, title: e.target.value } })}
+          />
         </Field>
         <Field label="Bio paragraphs">
           <textarea
             rows={6}
             value={about.bio.paragraphs.join('\n\n')}
             onChange={(e) =>
-              updateSection('about', {
-                ...about,
-                bio: { ...about.bio, paragraphs: e.target.value.split('\n\n').filter(Boolean) },
+              setAbout({
+                bio: {
+                  ...about.bio,
+                  paragraphs: e.target.value.split('\n\n').filter(Boolean),
+                },
               })
             }
           />
         </Field>
         <Field label="Profile role (bento card)">
-          <input value={about.profileRole} onChange={(e) => updateSection('about', { ...about, profileRole: e.target.value })} />
+          <input value={about.profileRole} onChange={(e) => setAbout({ profileRole: e.target.value })} />
         </Field>
-        <ImageField
-          label="Profile photo"
-          value={about.profilePhoto}
-          folder="about"
-          onChange={(profilePhoto) => updateSection('about', { ...about, profilePhoto })}
-        />
       </div>
-      <h3 className="admin-subtitle">Stats</h3>
+
+      <ImageGalleryPicker
+        label="Profile photo"
+        hint="Upload a new photo or pick one from your gallery (includes images used elsewhere on the site)."
+        value={about.profilePhoto}
+        folder="about"
+        onChange={(profilePhoto) => setAbout({ profilePhoto })}
+      />
+
+      <h3 className="admin-subtitle">Stats bar</h3>
+      <button
+        type="button"
+        className="admin-btn admin-btn--primary admin-btn--mb"
+        onClick={() =>
+          setAbout({
+            stats: [
+              ...about.stats,
+              { id: `stat-${Date.now()}`, label: 'New stat', value: '0', highlight: false },
+            ],
+          })
+        }
+      >
+        + Add stat
+      </button>
       {about.stats.map((stat, index) => (
-        <div key={stat.id} className="admin-form-grid admin-form-grid--inline">
-          <Field label="Label">
-            <input
-              value={stat.label}
-              onChange={(e) => {
-                const stats = [...about.stats]
-                stats[index] = { ...stat, label: e.target.value }
-                updateSection('about', { ...about, stats })
-              }}
-            />
-          </Field>
-          <Field label="Value">
-            <input
-              value={stat.value}
-              onChange={(e) => {
-                const stats = [...about.stats]
-                stats[index] = { ...stat, value: e.target.value }
-                updateSection('about', { ...about, stats })
-              }}
-            />
-          </Field>
-        </div>
+        <details key={stat.id} className="admin-accordion">
+          <summary>{stat.label}</summary>
+          <div className="admin-form-grid admin-form-grid--inline">
+            <Field label="Label">
+              <input value={stat.label} onChange={(e) => updateStat(index, { label: e.target.value })} />
+            </Field>
+            <Field label="Value">
+              <input value={stat.value} onChange={(e) => updateStat(index, { value: e.target.value })} />
+            </Field>
+            <label className="admin-checkbox">
+              <input
+                type="checkbox"
+                checked={!!stat.highlight}
+                onChange={(e) => updateStat(index, { highlight: e.target.checked })}
+              />
+              Highlight (orange)
+            </label>
+            <button
+              type="button"
+              className="admin-btn admin-btn--danger"
+              onClick={() => setAbout({ stats: about.stats.filter((_, i) => i !== index) })}
+            >
+              Delete
+            </button>
+          </div>
+        </details>
       ))}
+
+      <h3 className="admin-subtitle">Work experience</h3>
+      <button
+        type="button"
+        className="admin-btn admin-btn--primary admin-btn--mb"
+        onClick={() =>
+          setAbout({
+            workExperience: [
+              ...about.workExperience,
+              {
+                id: `job-${Date.now()}`,
+                company: 'Company',
+                location: 'Remote',
+                type: 'Full Time',
+                period: '2025 - Present',
+                role: 'Role title',
+                description: 'What you did in this role.',
+              },
+            ],
+          })
+        }
+      >
+        + Add job
+      </button>
+      {about.workExperience.map((job, index) => (
+        <details key={job.id} className="admin-accordion">
+          <summary>{job.role} — {job.company}</summary>
+          <div className="admin-form-grid">
+            <Field label="Company">
+              <input value={job.company} onChange={(e) => updateJob(index, { company: e.target.value })} />
+            </Field>
+            <Field label="Location">
+              <input value={job.location} onChange={(e) => updateJob(index, { location: e.target.value })} />
+            </Field>
+            <Field label="Employment type">
+              <input value={job.type} onChange={(e) => updateJob(index, { type: e.target.value })} />
+            </Field>
+            <Field label="Period">
+              <input value={job.period} onChange={(e) => updateJob(index, { period: e.target.value })} />
+            </Field>
+            <Field label="Role">
+              <input value={job.role} onChange={(e) => updateJob(index, { role: e.target.value })} />
+            </Field>
+            <Field label="Description">
+              <textarea
+                rows={4}
+                value={job.description}
+                onChange={(e) => updateJob(index, { description: e.target.value })}
+              />
+            </Field>
+            <button
+              type="button"
+              className="admin-btn admin-btn--danger"
+              onClick={() =>
+                setAbout({ workExperience: about.workExperience.filter((_, i) => i !== index) })
+              }
+            >
+              Delete job
+            </button>
+          </div>
+        </details>
+      ))}
+
+      <h3 className="admin-subtitle">My stack</h3>
+      <button
+        type="button"
+        className="admin-btn admin-btn--primary admin-btn--mb"
+        onClick={() =>
+          setAbout({
+            stackTools: [
+              ...about.stackTools,
+              { id: 'figma', name: 'Tool name', category: 'Category' },
+            ],
+          })
+        }
+      >
+        + Add tool
+      </button>
+      {about.stackTools.map((tool, index) => (
+        <details key={`${tool.id}-${index}`} className="admin-accordion">
+          <summary>{tool.name}</summary>
+          <div className="admin-form-grid admin-form-grid--inline">
+            <Field label="Icon ID">
+              <select value={tool.id} onChange={(e) => updateTool(index, { id: e.target.value })}>
+                <option value="figma">Figma</option>
+                <option value="framer">Framer</option>
+                <option value="notion">Notion</option>
+                <option value="jira">Jira</option>
+                <option value="protopie">ProtoPie</option>
+                <option value="chatgpt">ChatGPT</option>
+                <option value="shots">Shots</option>
+              </select>
+            </Field>
+            <Field label="Name">
+              <input value={tool.name} onChange={(e) => updateTool(index, { name: e.target.value })} />
+            </Field>
+            <Field label="Category">
+              <input value={tool.category} onChange={(e) => updateTool(index, { category: e.target.value })} />
+            </Field>
+            <button
+              type="button"
+              className="admin-btn admin-btn--danger"
+              onClick={() => setAbout({ stackTools: about.stackTools.filter((_, i) => i !== index) })}
+            >
+              Delete
+            </button>
+          </div>
+        </details>
+      ))}
+
+      <h3 className="admin-subtitle">Education</h3>
+      <div className="admin-form-grid">
+        <Field label="School">
+          <input
+            value={about.education.school}
+            onChange={(e) => setAbout({ education: { ...about.education, school: e.target.value } })}
+          />
+        </Field>
+        <Field label="Period">
+          <input
+            value={about.education.period}
+            onChange={(e) => setAbout({ education: { ...about.education, period: e.target.value } })}
+          />
+        </Field>
+        <Field label="Degree">
+          <input
+            value={about.education.degree}
+            onChange={(e) => setAbout({ education: { ...about.education, degree: e.target.value } })}
+          />
+        </Field>
+      </div>
     </>
   )
 }

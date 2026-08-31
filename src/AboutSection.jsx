@@ -6,9 +6,10 @@ import { NAV_BACK_HOME } from './pageTransition'
 import { StackToolIcon } from './stackIcons'
 
 export default function AboutSection({ showBack = false }) {
-  useContent()
+  const { content } = useContent()
   const { stats, bio, workExperience, stackTools, education, profilePhoto: aboutPhoto } =
     getAboutContent()
+  const profileName = content.site?.name || 'Haider Ghauri'
 
   return (
     <section
@@ -48,7 +49,7 @@ export default function AboutSection({ showBack = false }) {
             <img
               className="about-photo"
               src={aboutPhoto || profilePhoto}
-              alt="Haider Ghauri"
+              alt={profileName}
               width={420}
               height={520}
             />

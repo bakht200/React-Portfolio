@@ -104,3 +104,60 @@ export async function uploadPortfolioPdf(file, folder = 'case-studies') {
 
   return getPublicStorageUrl('portfolio-pdfs', path)
 }
+
+const IMAGE_GALLERY_FOLDERS = [
+  'about',
+  'site',
+  'projects',
+  'case-studies',
+  'trusted',
+  'expertise',
+  'how-i-work',
+  'cta',
+  'uploads',
+]
+
+/** List uploaded images from Supabase Storage (admin gallery). */
+export async function listPortfolioImages() {
+  if (!isSupabaseConfigured || !supabase) return []
+
+  const images = []
+
+  async function listFolder(prefix) {
+    const { data, error } = await supabase.storage.from('portfolio-images').list(prefix, {
+      limit: 100,
+      sortBy: { column: 'created_at', order: 'desc' },
+    })
+    if (error || !data) return
+
+    for (const item of data) {
+      if (!item.id) continue
+      const path = prefix ? `${prefix}/${item.name}` : item.name
+      images.push({
+        path,
+        url: getPublicStorageUrl('portfolio-images', path),
+        name: item.name,
+      })
+    }
+  }
+
+  await Promise.all(IMAGE_GALLERY_FOLDERS.map((folder) => listFolder(folder)))
+
+  const nested = await supabase.storage.from('portfolio-images').list('expertise/tools', {
+    limit: 100,
+    sortBy: { column: 'created_at', order: 'desc' },
+  })
+  if (nested.data) {
+    for (const item of nested.data) {
+      if (!item.id) continue
+      const path = `expertise/tools/${item.name}`
+      images.push({
+        path,
+        url: getPublicStorageUrl('portfolio-images', path),
+        name: item.name,
+      })
+    }
+  }
+
+  return images
+}
