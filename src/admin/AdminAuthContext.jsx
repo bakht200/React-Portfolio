@@ -35,7 +35,9 @@ export function AdminAuthProvider({ children }) {
   }, [])
 
   const login = useCallback(async (email, password) => {
-    if (!supabase) return false
+    if (!supabase) {
+      throw new Error('Supabase is not configured. Check your environment variables.')
+    }
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email.trim(),

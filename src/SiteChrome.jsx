@@ -172,7 +172,7 @@ function FooterLink({ item }) {
 function Footer() {
   const { content } = useContent()
   const { footer, site } = content
-  const logoSrc = resolveAsset(site.logoAsset)
+  const logoSrc = resolveContentAsset(site.logoAsset)
 
   return (
     <footer className="site-footer">

@@ -1,7 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
 
-const url = import.meta.env.VITE_SUPABASE_URL
-const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+/** Public client config — anon key is safe to ship in the frontend bundle. */
+const DEFAULT_URL = 'https://onmrhwoabafsaocwbxjb.supabase.co'
+const DEFAULT_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ubXJod29hYmFmc2FvY3dieGpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxNjc0MjYsImV4cCI6MjEwMzc0MzQyNn0.DYYhSPtuckhuswhwrwYx3H9YrO78ygf15kvvMiPnzWs'
+
+const url = import.meta.env.VITE_SUPABASE_URL || DEFAULT_URL
+const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_ANON_KEY
 
 export const isSupabaseConfigured = Boolean(url && anonKey)
 
