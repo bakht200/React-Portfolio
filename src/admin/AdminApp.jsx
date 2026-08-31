@@ -17,8 +17,11 @@ import {
   TrustedEditor,
 } from './AdminEditors'
 import ProtectedRoute from './ProtectedRoute'
+import { useAdminPageTitle } from './useAdminPageTitle'
 
 export default function AdminApp() {
+  useAdminPageTitle()
+
   return (
     <Routes>
       <Route path="login" element={<AdminLogin />} />

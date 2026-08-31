@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import AdminBrand from './AdminBrand'
 import { useAdminAuth } from './AdminAuthContext'
 import { ADMIN_EMAIL } from '../lib/supabase'
 import './admin.css'
@@ -43,7 +44,7 @@ export default function AdminLogin() {
   return (
     <div className="admin-login-page">
       <div className="admin-login-card">
-        <p className="admin-login-eyebrow">Portfolio Builder</p>
+        <AdminBrand className="admin-brand--login" />
         <h1 className="admin-login-title">Sign in</h1>
         <p className="admin-login-sub">Haider only — changes publish live for all visitors.</p>
 

@@ -21,6 +21,33 @@
   margin-bottom: 8px;
 }
 
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-brand-logo {
+  flex-shrink: 0;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.admin-brand-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #f4f4f3;
+}
+
+.admin-brand--login {
+  margin-bottom: 20px;
+}
+
+.admin-brand--login .admin-brand-title {
+  color: #060612;
+}
+
 .admin-sidebar-eyebrow {
   margin: 0;
   font-size: 11px;

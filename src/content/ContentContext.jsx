@@ -69,7 +69,10 @@ export function ContentProvider({ children }) {
 
   useEffect(() => {
     applyTheme(content.theme)
-    document.title = content.site?.title || defaultContent.site.title
+    const onAdmin = window.location.pathname.includes('/admin')
+    if (!onAdmin) {
+      document.title = content.site?.title || defaultContent.site.title
+    }
   }, [content.theme, content.site?.title])
 
   const doPublish = useCallback(async (next) => {

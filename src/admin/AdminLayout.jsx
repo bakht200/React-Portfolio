@@ -1,4 +1,5 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
+import AdminBrand from './AdminBrand'
 import { useAdminAuth } from './AdminAuthContext'
 import { PublishStatus } from './AdminEditors'
 import './admin.css'
@@ -32,8 +33,7 @@ export default function AdminLayout() {
     <div className="admin-shell">
       <aside className="admin-sidebar">
         <div className="admin-sidebar-head">
-          <p className="admin-sidebar-eyebrow">Builder</p>
-          <p className="admin-sidebar-title">Haider Portfolio</p>
+          <AdminBrand />
         </div>
         <nav className="admin-nav">
           {NAV.map((item) => (
