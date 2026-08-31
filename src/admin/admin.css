@@ -332,14 +332,43 @@
 
 .admin-upload {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
   margin-top: 8px;
+}
+
+.admin-upload-preview {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #e8e8ec;
+  border-radius: 10px;
+  background: #fafafa;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.admin-upload-preview img {
+  display: block;
+  max-width: 120px;
+  max-height: 120px;
+  object-fit: contain;
+}
+
+.admin-field-hint {
+  margin: -4px 0 8px;
+  font-size: 12px;
+  color: #8a8a93;
+  line-height: 1.4;
 }
 
 .admin-upload-hint {
   font-size: 12px;
   color: #8a8a93;
+}
+
+.admin-upload-hint--ok {
+  color: #15803d;
 }
 
 @media (max-width: 900px) {

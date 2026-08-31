@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useContent } from '../content/ContentContext'
 import { publishContent, uploadPortfolioImage, uploadPortfolioPdf } from '../content/supabaseApi'
 import { defaultContent } from '../content/defaultContent'
+import { resolveContentAsset } from '../content/resolveAsset'
 
 function Field({ label, children }) {
   return (
@@ -42,18 +43,22 @@ export function PublishStatus() {
   )
 }
 
-function ImageUpload({ onUploaded }) {
+function ImageUpload({ onUploaded, folder = 'uploads', label = 'Upload image' }) {
+  const inputRef = useRef(null)
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
+  const [done, setDone] = useState('')
 
   const handleChange = async (event) => {
     const file = event.target.files?.[0]
     if (!file) return
     setUploading(true)
     setError('')
+    setDone('')
     try {
-      const url = await uploadPortfolioImage(file)
+      const url = await uploadPortfolioImage(file, folder)
       onUploaded(url)
+      setDone('Uploaded to Supabase')
     } catch (err) {
       setError(err.message || 'Upload failed')
     } finally {
@@ -64,10 +69,46 @@ function ImageUpload({ onUploaded }) {
 
   return (
     <div className="admin-upload">
-      <input type="file" accept="image/*" disabled={uploading} onChange={handleChange} />
-      {uploading ? <span className="admin-upload-hint">Uploading…</span> : null}
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*,.svg"
+        disabled={uploading}
+        hidden
+        onChange={handleChange}
+      />
+      <button
+        type="button"
+        className="admin-btn admin-btn--sm"
+        disabled={uploading}
+        onClick={() => inputRef.current?.click()}
+      >
+        {uploading ? 'Uploading…' : label}
+      </button>
+      {done ? <span className="admin-upload-hint admin-upload-hint--ok">{done}</span> : null}
       {error ? <span className="admin-error">{error}</span> : null}
     </div>
+  )
+}
+
+function ImageField({ label, value, onChange, folder = 'uploads', hint }) {
+  const previewSrc = value ? resolveContentAsset(value) : null
+
+  return (
+    <Field label={label}>
+      {hint ? <p className="admin-field-hint">{hint}</p> : null}
+      <input
+        value={value || ''}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Asset key or Supabase URL"
+      />
+      {previewSrc ? (
+        <div className="admin-upload-preview">
+          <img src={previewSrc} alt="" />
+        </div>
+      ) : null}
+      <ImageUpload folder={folder} onUploaded={onChange} />
+    </Field>
   )
 }
 
@@ -252,9 +293,13 @@ export function HeroEditor() {
         <Field label="Your name">
           <input value={site.name} onChange={(e) => updateSection('site', { ...site, name: e.target.value })} />
         </Field>
-        <Field label="Logo asset key">
-          <input value={site.logoAsset} onChange={(e) => updateSection('site', { ...site, logoAsset: e.target.value })} />
-        </Field>
+        <ImageField
+          label="Logo"
+          hint="Upload PNG, JPG, or SVG — stored in Supabase and shown in the header & footer."
+          value={site.logoAsset}
+          folder="site"
+          onChange={(logoAsset) => updateSection('site', { ...site, logoAsset })}
+        />
         <Field label="Hero badge">
           <input value={hero.badge} onChange={(e) => updateSection('hero', { ...hero, badge: e.target.value })} />
         </Field>
@@ -335,10 +380,12 @@ export function ProjectsEditor() {
             <Field label="Year">
               <input value={project.year} onChange={(e) => updateProject(index, { year: e.target.value })} />
             </Field>
-            <Field label="Image (asset key or upload)">
-              <input value={project.image} onChange={(e) => updateProject(index, { image: e.target.value })} />
-              <ImageUpload onUploaded={(url) => updateProject(index, { image: url })} />
-            </Field>
+            <ImageField
+              label="Image"
+              value={project.image}
+              folder="projects"
+              onChange={(image) => updateProject(index, { image })}
+            />
             <Field label="Content paragraphs (one per line)">
               <textarea
                 rows={5}
@@ -411,10 +458,12 @@ export function CaseStudiesEditor() {
               <input value={study.pdf} onChange={(e) => updateStudy(index, { pdf: e.target.value })} />
               <PdfUpload onUploaded={(url) => updateStudy(index, { pdf: url })} />
             </Field>
-            <Field label="Image">
-              <input value={study.image} onChange={(e) => updateStudy(index, { image: e.target.value })} />
-              <ImageUpload onUploaded={(url) => updateStudy(index, { image: url })} />
-            </Field>
+            <ImageField
+              label="Cover image"
+              value={study.image}
+              folder="case-studies"
+              onChange={(image) => updateStudy(index, { image })}
+            />
             <label className="admin-checkbox">
               <input
                 type="checkbox"
@@ -466,10 +515,12 @@ export function AboutEditor() {
         <Field label="Profile role (bento card)">
           <input value={about.profileRole} onChange={(e) => updateSection('about', { ...about, profileRole: e.target.value })} />
         </Field>
-        <Field label="Profile photo asset">
-          <input value={about.profilePhoto} onChange={(e) => updateSection('about', { ...about, profilePhoto: e.target.value })} />
-          <ImageUpload onUploaded={(url) => updateSection('about', { ...about, profilePhoto: url })} />
-        </Field>
+        <ImageField
+          label="Profile photo"
+          value={about.profilePhoto}
+          folder="about"
+          onChange={(profilePhoto) => updateSection('about', { ...about, profilePhoto })}
+        />
       </div>
       <h3 className="admin-subtitle">Stats</h3>
       {about.stats.map((stat, index) => (
@@ -620,6 +671,12 @@ export function CtaEditor() {
         <Field label="Booking button">
           <input value={cta.bookingButton} onChange={(e) => updateSection('cta', { ...cta, bookingButton: e.target.value })} />
         </Field>
+        <ImageField
+          label="CTA profile photo"
+          value={cta.profilePhoto}
+          folder="cta"
+          onChange={(profilePhoto) => updateSection('cta', { ...cta, profilePhoto })}
+        />
       </div>
     </>
   )

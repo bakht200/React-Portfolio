@@ -78,6 +78,7 @@ export async function uploadPortfolioImage(file, folder = 'uploads') {
   const { error } = await supabase.storage.from('portfolio-images').upload(path, file, {
     cacheControl: '3600',
     upsert: false,
+    contentType: file.type || undefined,
   })
 
   if (error) throw error
